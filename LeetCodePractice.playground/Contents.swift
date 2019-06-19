@@ -95,3 +95,36 @@ func findMedianSortedArrays(_ nums1: [Int], _ nums2: [Int]) -> Double {
     
     return Double(0)
 }
+
+
+// 5 最长回文子串 中心扩展算法
+private func expandAroundCenter(strings: [String], L: Int, R: Int) -> Int{
+    var left = L, right = R
+    while left >= 0 && right < strings.count && strings[left] == strings[right] {
+        left -= 1
+        right += 1
+    }
+    return (right-1) - (left+1) + 1
+}
+
+func longestPalindrome(_ s: String) -> String {
+    let strings = s.map{ String($0) }
+    if strings.count < 1 { return "" }
+    var start = 0, end = 0
+    for i in 0..<strings.count {
+        let len1 = expandAroundCenter(strings: strings, L: i, R: i)
+        let len2 = expandAroundCenter(strings: strings, L: i, R: i+1)
+        let lenMax = max(len1, len2)
+        if lenMax > (end - start) {
+            start = i - (lenMax-1)/2
+            end = i + lenMax/2
+        }
+    }
+    var maxSub = ""
+    for chart in strings[start...end] {
+        maxSub += chart
+    }
+    return maxSub
+}
+
+
