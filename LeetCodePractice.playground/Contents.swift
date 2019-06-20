@@ -128,3 +128,32 @@ func longestPalindrome(_ s: String) -> String {
 }
 
 
+func convert(_ s: String, _ numRows: Int) -> String {
+    if numRows == 1 { return s }
+    var result: [[String]] = []
+    for _ in 0..<min(s.count, numRows) {
+        result.append([String]())
+    }
+    var curRow = 0
+    var isDown = true
+    for char in s.map({ String($0) }) {
+        result[curRow].append(char)
+        if curRow == 0 {
+            isDown = true
+        } else if curRow == numRows - 1 {
+            isDown = false
+        }
+        if isDown {
+            curRow += 1
+        } else {
+            curRow -= 1
+        }
+    }
+    var resultString = ""
+    for rowArray in result {
+        resultString += rowArray.joined()
+    }
+    return resultString
+}
+
+convert("LEETCODEISHIRING", 4)
