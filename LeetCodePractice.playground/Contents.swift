@@ -157,3 +157,20 @@ func convert(_ s: String, _ numRows: Int) -> String {
 }
 
 convert("LEETCODEISHIRING", 4)
+
+func reverse(_ x: Int) -> Int {
+    var result = 0
+    var input = abs(x)
+    while input != 0 {
+        let pop = input % 10
+        input /= 10
+        if (result > INT32_MAX / 10 || (result == INT32_MAX / 10 && pop > 7)) { return 0 }
+        result = result * 10 + pop
+    }
+    if x < 0 {
+        result = -result
+    }
+    return result
+}
+
+reverse(-1234)
