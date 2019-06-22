@@ -174,3 +174,40 @@ func reverse(_ x: Int) -> Int {
 }
 
 reverse(-1234)
+
+func myAtoi(_ str: String) -> Int {
+    var isPositive: Bool?
+    var nums = [Character]()
+    for char in str {
+        if (String(char) == "-" || String(char) == "+" || String(char) == " "), isPositive == nil, nums.count == 0 {
+            if (String(char) == "-") {
+                isPositive = false
+            } else if (String(char) == "+") {
+                isPositive = true
+            }
+            continue
+        }
+        if let _ = Int(String(char)), nums.count >= 0 {
+            nums.append(char)
+        } else {
+            break
+        }
+    }
+    var result = 0
+    for i in nums {
+        if (result > INT32_MAX / 10 || (result == INT32_MAX / 10 && Int(String(i))! > 7)) {
+            if isPositive == false {
+                result = -Int(INT32_MAX)-1
+            } else {
+                result = Int(INT32_MAX)
+            }
+            return result
+        }
+        result = result * 10 + Int(String(i))!
+    }
+    if isPositive == false {
+        result = -result
+    }
+    return result
+}
+
