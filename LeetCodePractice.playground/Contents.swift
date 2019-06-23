@@ -211,3 +211,14 @@ func myAtoi(_ str: String) -> Int {
     return result
 }
 
+func isPalindrome(_ x: Int) -> Bool {
+    if x < 0 {
+        return false
+    }
+    let xStr = String(x)
+    let xStrR = String(xStr.reversed())
+    if xStr == xStrR {
+        return true
+    }
+    return false
+}
