@@ -222,3 +222,22 @@ func isPalindrome(_ x: Int) -> Bool {
     }
     return false
 }
+
+
+func maxArea(_ height: [Int]) -> Int {
+    var maxSize = 0
+    var left_index = 0
+    var right_index = height.count-1
+    maxSize = (right_index - left_index) * min(height[left_index], height[right_index])
+    while left_index < right_index {
+        if height[left_index] > height[right_index] {
+            right_index -= 1
+        } else {
+            left_index += 1
+        }
+        maxSize = max(maxSize, (right_index - left_index) * min(height[left_index], height[right_index]))
+    }
+    return maxSize
+}
+
+maxArea([1,8,6,2,5,4,8,3,7])
