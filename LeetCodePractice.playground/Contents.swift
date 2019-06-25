@@ -241,3 +241,20 @@ func maxArea(_ height: [Int]) -> Int {
 }
 
 maxArea([1,8,6,2,5,4,8,3,7])
+
+func intToRoman(_ num: Int) -> String {
+    if num == 0 { return "0" }
+    let all = ["M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I",]
+    let allValues = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1,]
+    var result = ""
+    var tmpNum = num
+    for i in 0 ... 12 {
+        while tmpNum >= allValues[i] {
+            tmpNum -= allValues[i]
+            result = result + all[i]
+        }
+    }
+    return result
+}
+
+intToRoman(3)
