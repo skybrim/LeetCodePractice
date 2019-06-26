@@ -258,3 +258,33 @@ func intToRoman(_ num: Int) -> String {
 }
 
 intToRoman(3)
+
+func romanToInt(_ s: String) -> Int {
+    if s.count == 0 { return 0 }
+    let singleStrs = ["M", "D", "C", "L", "X", "V", "I",]
+    let doubleStrs = ["CM", "CD", "XC", "XL", "IX", "IV", ]
+    let singleValues = [1000, 500, 100, 50, 10, 5, 1,]
+    let doubleValues = [900, 400, 90, 40, 9, 4,]
+    var romanStr = s
+    var result = 0
+    for i in 0 ..< doubleStrs.count {
+        if romanStr.contains(doubleStrs[i]) {
+            romanStr = romanStr.replacingOccurrences(of: doubleStrs[i], with: "")
+            result += doubleValues[i]
+        }
+    }
+    var leftStrings = romanStr.map{ String($0) }
+    for j in 0 ..< singleStrs.count {
+        if leftStrings.contains(singleStrs[j]) {
+            repeat {
+                result += singleValues[j]
+                if leftStrings.count == 0 { break }
+                leftStrings.removeFirst()
+            } while leftStrings.first == singleStrs[j]
+        }
+    }
+    return result
+}
+
+romanToInt("MCMXCIV")
+
