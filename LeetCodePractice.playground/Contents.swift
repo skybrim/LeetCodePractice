@@ -288,3 +288,37 @@ func romanToInt(_ s: String) -> Int {
 
 romanToInt("MCMXCIV")
 
+func longestCommonPrefix(_ strs: [String]) -> String {
+    if strs.count == 0 { return "" }
+    var isDiff = false
+    var count = 0
+    var char: Character
+    while isDiff != true {
+        if strs.first!.count == count { return "" }
+        char = strs.first![strs.first!.index(strs.first!.startIndex, offsetBy: count)]
+        for string in strs {
+            if count < string.count {
+                if string[string.index(string.startIndex, offsetBy: count)] != char {
+                    isDiff = true
+                    break
+                }
+            } else {
+                isDiff = true
+                break
+            }
+        }
+        if isDiff == false {
+            count += 1
+        }
+        if strs.first!.count == count {
+            isDiff = true
+        }
+    }
+    count -= 1
+    if count < 0 {
+        return ""
+    }
+    return String(strs.first![strs.first!.startIndex ... strs.first!.index(strs.first!.startIndex, offsetBy: count)])
+}
+
+longestCommonPrefix(["a"])
