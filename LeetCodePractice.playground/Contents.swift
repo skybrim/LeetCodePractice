@@ -322,3 +322,27 @@ func longestCommonPrefix(_ strs: [String]) -> String {
 }
 
 longestCommonPrefix(["a"])
+
+func threeSum(_ nums: [Int]) -> [[Int]] {
+    if nums.count < 3 { return [] }
+    var input = Array(nums)
+    input = input.sorted()
+    if input.first == input.last, input.first == 0 { return [[0, 0, 0]] }
+    if input.first! >= 0, input.last! <= 0 { return [] }
+    var result = [[Int]]()
+    for i in 0 ..< input.count {
+        var hash = [Int:[Int]]()
+        for j in i+1 ..< input.count {
+            if let _ = hash[input[j]] {
+                var res = Array(hash[input[j]]!)
+                res.append(input[j])
+                result.append(res)
+                hash[input[j]] = nil
+            } else {
+                let tmp = input[i] + input[j]
+                hash[-tmp] = [input[i],input[j]]
+            }
+        }
+    }
+    return Array(Set(result))
+}
