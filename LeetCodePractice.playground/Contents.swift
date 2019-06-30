@@ -371,3 +371,36 @@ func threeSumClosest(_ nums: [Int], _ target: Int) -> Int {
     }
     return result
 }
+
+
+
+func letterCombinations(_ digits: String) -> [String] {
+    if digits.count == 0 {
+        return []
+    }
+    let dic = [
+        2 : "abc",
+        3 : "def",
+        4 : "ghi",
+        5 : "jkl",
+        6 : "mno",
+        7 : "pqrs",
+        8 : "tuv",
+        9 : "wxyz",
+    ];
+    var result = [String]()
+    func helper(_ i: Int, _ tmp: String) {
+        if i == digits.count {
+            result.append(tmp)
+        } else {
+            let key = digits[digits.index(digits.startIndex, offsetBy: i)]
+            for char in dic[Int(String(key))!]! {
+                helper(i + 1, tmp + String(char))
+            }
+        }
+    }
+    helper(0, "")
+    return result
+}
+
+letterCombinations("23")
