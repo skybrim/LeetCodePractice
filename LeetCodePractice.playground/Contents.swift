@@ -346,3 +346,28 @@ func threeSum(_ nums: [Int]) -> [[Int]] {
     }
     return Array(Set(result))
 }
+
+func threeSumClosest(_ nums: [Int], _ target: Int) -> Int {
+    if nums.count < 3 { return 0 }
+    var input = Array(nums)
+    input = input.sorted()
+    if input.first == input.last { return input.first! * 3 }
+    var result = input[0] + input[1] + input[2]
+    for i in 0 ..< input.count {
+        var startIndex = i+1, endIndex = input.count - 1
+        while startIndex < endIndex {
+            let sum = input[i] + input[startIndex] + input[endIndex]
+            if abs(target - sum) < abs(target - result) {
+                result = sum
+            } else if target - sum < 0 {
+                endIndex -= 1
+            } else if target - sum > 0 {
+                startIndex += 1
+            } else {
+                //target = sum
+                return sum
+            }
+        }
+    }
+    return result
+}
