@@ -404,3 +404,33 @@ func letterCombinations(_ digits: String) -> [String] {
 }
 
 letterCombinations("23")
+
+func fourSum(_ nums: [Int], _ target: Int) -> [[Int]] {
+    if nums.count < 4 { return [] }
+    var input = Array(nums)
+    input = input.sorted()
+    if input.first! > target, input.last! < target { return [] }
+    var hash = [Int : [Int]]()
+    var result = [[Int]]()
+    for i in 0 ..< input.count {
+        for j in i + 1 ..< input.count {
+            for k in j + 1 ..< input.count {
+                if hash.keys.contains(nums[k]) {
+                    var tmp = [nums[k]] + hash[nums[k]]!
+                    tmp = tmp.sorted()
+                    result.append(tmp)
+                } else {
+                    hash[target - (nums[i] + nums[j] + nums[k])] = [nums[i], nums[j], nums[k]]
+                }
+                if k == input.count - 1 {
+                    hash.removeAll()
+                }
+            }
+        }
+    }
+    let tmpResult = Set(result)
+    return Array(tmpResult)
+}
+
+fourSum([-3,-1,0,2,4,5], 0)
+
