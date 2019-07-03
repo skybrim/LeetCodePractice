@@ -13,7 +13,32 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        isValid("(]")
+        print(generateParenthesis(3))
+    }
+    
+    func generateParenthesis(_ n: Int) -> [String] {
+        var result = [String]()
+        func helper(l: Int, r: Int, s: String) {
+            var r_count = r
+            var str = s
+            if l == n {
+                while r_count < n {
+                    r_count += 1
+                    str += ")"
+                }
+                result += [str]
+                return
+            }
+            if l == r_count {
+                helper(l: l + 1, r: r_count, s: str + "(")
+            }
+            if l > r_count {
+                helper(l: l + 1, r: r_count, s: str + "(")
+                helper(l: l, r: r_count + 1, s: str + ")")
+            }
+        }
+        helper(l: 0, r: 0, s: "")
+        return result
     }
     
     func isValid(_ s: String) -> Bool {
