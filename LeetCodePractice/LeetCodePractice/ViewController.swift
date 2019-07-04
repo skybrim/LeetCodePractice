@@ -13,8 +13,23 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        print(generateParenthesis(3))
+        var arg = [0,0,1,1,1,2,2,3,3,4]
+        
+        removeDuplicates(&arg)
     }
+    
+    func removeDuplicates(_ nums: inout [Int]) -> Int {
+        if nums.count == 0 { return 0 }
+        var i = 0
+        for j in 1 ..< nums.count {
+            if nums[i] != nums[j] {
+                i += 1
+                nums[i] = nums[j]
+            }
+        }
+        return i + 1
+    }
+    
     
     func generateParenthesis(_ n: Int) -> [String] {
         var result = [String]()
