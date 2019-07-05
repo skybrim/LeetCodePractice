@@ -13,9 +13,20 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        var arg = [0,0,1,1,1,2,2,3,3,4]
-        
-        removeDuplicates(&arg)
+
+    }
+    
+    func removeElement(_ nums: inout [Int], _ val: Int) -> Int {
+        var i = 0
+        while i < nums.count {
+            if nums[i] == val {
+                nums[i] = nums[nums.count - 1]
+                nums.removeLast()
+            } else {
+                i += 1
+            }
+        }
+        return nums.count
     }
     
     func removeDuplicates(_ nums: inout [Int]) -> Int {
