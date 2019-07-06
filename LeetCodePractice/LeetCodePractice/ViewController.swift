@@ -13,8 +13,31 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-
+        strStr("hello", "ll")
     }
+
+    func strStr(_ haystack: String, _ needle: String) -> Int {
+        if needle.isEmpty  { return 0 }
+        let n1 = haystack.count
+        let n2 = needle.count
+        if n2 > n1 { return -1 }
+        for i in 0 ..< n1 - n2 + 1 {
+            if haystack[haystack.index(haystack.startIndex, offsetBy: i) ..< haystack.index(haystack.startIndex, offsetBy: i + n2)] == needle {
+                return i
+            }
+        }
+        return -1
+    }
+    
+//    func strStr(_ haystack: String, _ needle: String) -> Int {
+//        if needle.count > haystack.count { return -1 }
+//        if needle.isEmpty  { return 0 }
+//        if let index = haystack.range(of: needle)?.lowerBound {
+//            let distance = haystack.distance(from: haystack.startIndex, to: index)
+//            return distance
+//        }
+//        return -1
+//    }
     
     func removeElement(_ nums: inout [Int], _ val: Int) -> Int {
         var i = 0
