@@ -13,7 +13,38 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        strStr("hello", "ll")
+
+    }
+    
+    func divide(_ dividend: Int, _ divisor: Int) -> Int {
+        if abs(dividend) < abs(divisor) { return 0 }
+        if divisor == 1 { return dividend }
+        var a: Int
+        if (dividend > 0 && divisor > 0) || (dividend < 0 && divisor < 0) {
+            a = 1
+        } else {
+            a = -1
+        }
+        var result = 0
+        var time = 1
+        var inoutDividend = abs(dividend)
+        var inoutDivisor = abs(divisor)
+        while inoutDividend >= abs(divisor) {
+            if inoutDividend >= inoutDivisor {
+                inoutDividend -= inoutDivisor
+                inoutDivisor += inoutDivisor
+                if Int(INT32_MAX) - time < result {
+                    return Int(INT32_MAX)
+                }
+                result += time
+                time += time
+            } else {
+                inoutDivisor = abs(divisor)
+                time = 1
+            }
+            print("inoutDividend \(inoutDividend)   inoutDivisor \(inoutDivisor)  time \(time)")
+        }
+        return result * a
     }
 
     func strStr(_ haystack: String, _ needle: String) -> Int {
