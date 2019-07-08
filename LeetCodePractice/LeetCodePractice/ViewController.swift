@@ -13,7 +13,30 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-
+        print(search([4,5,6,7,0,1,2],0))
+    }
+    
+    func search(_ nums: [Int], _ target: Int) -> Int {
+        var leftIndex = 0
+        var rightIndex = nums.count - 1
+        while leftIndex <= rightIndex {
+            let midIndex = leftIndex + (rightIndex - leftIndex) / 2
+            if nums[midIndex] == target { return midIndex }
+            if nums[leftIndex] <= nums[midIndex] {
+                if nums[leftIndex] <= target, target <= nums[midIndex] {
+                    rightIndex = midIndex
+                } else {
+                    leftIndex = midIndex + 1
+                }
+            } else {
+                if nums[midIndex] <= target, target <= nums[rightIndex] {
+                    leftIndex = midIndex
+                } else {
+                    rightIndex = midIndex - 1
+                }
+            }
+        }
+        return -1
     }
     
     func divide(_ dividend: Int, _ divisor: Int) -> Int {
