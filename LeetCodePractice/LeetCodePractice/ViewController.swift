@@ -16,6 +16,14 @@ class ViewController: UIViewController {
         print(search([4,5,6,7,0,1,2],0))
     }
     
+    func searchRange(_ nums: [Int], _ target: Int) -> [Int] {
+        if let first = nums.firstIndex(of: target),
+            let last = nums.lastIndex(of: target) {
+            return [first, last]
+        }
+        return [-1, -1]
+    }
+    
     func search(_ nums: [Int], _ target: Int) -> Int {
         var leftIndex = 0
         var rightIndex = nums.count - 1
