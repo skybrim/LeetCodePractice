@@ -13,8 +13,26 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        print(search([4,5,6,7,0,1,2],0))
+        print(searchInsert([1,3,5,6],0))
     }
+    
+    func searchInsert(_ nums: [Int], _ target: Int) -> Int {
+        var leftIndex = 0
+        var rightIndex = nums.count - 1
+        while leftIndex <= rightIndex {
+            if target < nums[leftIndex] { return leftIndex == 0 ? 0 : leftIndex}
+            if target > nums[rightIndex] { return rightIndex + 1 }
+            let midIndex = leftIndex + (rightIndex - leftIndex) / 2
+            if nums[midIndex] == target { return midIndex }
+            if target <= nums[midIndex] {
+                rightIndex = midIndex
+            } else {
+                leftIndex = midIndex + 1
+            }
+        }
+        return leftIndex
+    }
+    
     
     func searchRange(_ nums: [Int], _ target: Int) -> [Int] {
         if let first = nums.firstIndex(of: target),
