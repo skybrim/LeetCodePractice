@@ -13,8 +13,40 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        print(searchInsert([1,3,5,6],0))
+        print(countAndSay(1))
     }
+    
+    func countAndSay(_ n: Int) -> String {
+        if n == 1 {
+            return "1"
+        } else {
+            return recursiver(numString: countAndSay(n - 1))
+        }
+    }
+    
+    func recursiver(numString: String) -> String {
+        var strings = numString.map{ String($0) }
+        strings.append("0")
+        var results = [String]()
+        var j = 1
+        for i in 0 ..< strings.count {
+            if strings[i] == "0" { break }
+            if strings[i] == strings[i + 1] {
+                j += 1
+            } else {
+                let tmp = "\(j)" + "\(strings[i])"
+                j = 1
+                results.append(tmp)
+            }
+        }
+        var result = ""
+        for tmp in results {
+            result += tmp
+        }
+        return result
+    }
+
+    
     
     func searchInsert(_ nums: [Int], _ target: Int) -> Int {
         var leftIndex = 0
