@@ -13,17 +13,33 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        print(combinationSum([2, 3, 6, 7], 7))
+        print(combinationSum2([10,1,2,7,6,1,5], 8))
+    }
+    
+    func combinationSum2(_ candidates: [Int], _ target: Int) -> [[Int]] {
+        var results = [[Int]]()
+        func helper(i: Int, tmp_sum: Int, res: [Int]) {
+            if tmp_sum == target {
+                results += [res.sorted()]
+            }
+            if i == candidates.count || tmp_sum > target {
+                return
+            }
+            helper(i: i + 1, tmp_sum: tmp_sum + candidates[i], res: res + [candidates[i]])
+            helper(i: i + 1, tmp_sum: tmp_sum, res: res)
+        }
+        helper(i: 0, tmp_sum: 0, res: [])
+        return Array(Set(results))
     }
     
     func combinationSum(_ candidates: [Int], _ target: Int) -> [[Int]] {
         var results = [[Int]]()
         func helper(i: Int, tmp_sum: Int, res: [Int]) {
+            if tmp_sum == target {
+                results += [res.sorted()]
+            }
             if i == candidates.count || tmp_sum > target {
                 return
-            }
-            if tmp_sum == target {
-                results += [res]
             }
             helper(i: i, tmp_sum: tmp_sum + candidates[i], res: res + [candidates[i]])
             helper(i: i + 1, tmp_sum: tmp_sum, res: res)
