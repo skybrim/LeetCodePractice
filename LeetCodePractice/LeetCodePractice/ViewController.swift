@@ -13,7 +13,48 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        print(combinationSum2([10,1,2,7,6,1,5], 8))
+        print(multiply("123", "456"))
+    }
+    
+    
+    func multiply(_ num1: String, _ num2: String) -> String {
+        if num1 == "0" || num2 == "0" { return "0" }
+        var resDic = [Int : Int]()
+        for i in 1 ... num2.count {
+            for j in 1 ... num1.count {
+                guard
+                    let single1 = Int(String(num1[num1.index(num1.endIndex, offsetBy: -j)])),
+                    let single2 = Int(String(num2[num2.index(num2.endIndex, offsetBy: -i)]))
+                else {
+                    break
+                }
+                let key = i + j
+                var tmp = single1 * single2
+                if let value = resDic[key] {
+                    tmp += value
+                }
+                resDic[key] = tmp
+            }
+        }
+        print(resDic)
+        for key in resDic.keys.sorted() {
+            if let value = resDic[key] {
+                if let nextValue = resDic[key + 1] {
+                    resDic[key + 1] = nextValue + value / 10
+                } else  {
+                    if value > 9 {
+                        resDic[key + 1] = value / 10
+                    }
+                }
+                resDic[key] = value % 10
+            }
+        }
+        print(resDic)
+        var result = ""
+        for key in resDic.keys.sorted() {
+            result = String(resDic[key]!) + result
+        }
+        return result
     }
     
     func combinationSum2(_ candidates: [Int], _ target: Int) -> [[Int]] {
