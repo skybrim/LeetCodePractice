@@ -13,9 +13,29 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        print(multiply("123", "456"))
+        print(permute([1, 1, 2]))
     }
     
+    func permute(_ nums: [Int]) -> [[Int]] {
+        if nums.count == 0 || nums.count == 1 { return [nums] }
+        var result = [[Int]]()
+        func helper(orignNums: [Int], tmp: [Int]) {
+            if orignNums.count == 0 {
+                result.append(tmp)
+                return
+            }
+            for i in 0 ..< orignNums.count {
+                if i > 0, orignNums[i] == orignNums[i - 1] {
+                    continue
+                }
+                var a = orignNums
+                a.remove(at: i)
+                helper(orignNums: a, tmp: tmp + [orignNums[i]])
+            }
+        }
+        helper(orignNums: nums.sorted(), tmp: [])
+        return result
+    }
     
     func multiply(_ num1: String, _ num2: String) -> String {
         if num1 == "0" || num2 == "0" { return "0" }
