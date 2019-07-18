@@ -13,8 +13,30 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        print(permute([1, 1, 2]))
+//        print(permute([1, 1, 2]))
+        var matrix = [
+            [1,2,3],
+            [4,5,6],
+            [7,8,9]
+        ]
+        rotate(&matrix)
     }
+    
+    func rotate(_ matrix: inout [[Int]]) {
+        for i in 0 ..< matrix[0].count {
+            for j in i ..< matrix[0].count {
+                var tmpA = matrix[i][j], tmpB = matrix[j][i]
+                swap(&tmpA, &tmpB)
+                matrix[i][j] = tmpA
+                matrix[j][i] = tmpB
+            }
+        }
+        for (index, tmp) in matrix.enumerated() {
+            matrix[index] = tmp.reversed()
+        }
+        print(matrix)
+    }
+    
     
     func permute(_ nums: [Int]) -> [[Int]] {
         if nums.count == 0 || nums.count == 1 { return [nums] }
