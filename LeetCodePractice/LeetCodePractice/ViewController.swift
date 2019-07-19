@@ -13,13 +13,26 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-//        print(permute([1, 1, 2]))
-        var matrix = [
-            [1,2,3],
-            [4,5,6],
-            [7,8,9]
-        ]
-        rotate(&matrix)
+        print(groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]))
+    }
+    
+    func groupAnagrams(_ strs: [String]) -> [[String]] {
+        var dic = [[String] : [String]]()
+        for item in strs {
+            let itemArray = item.map{ String($0) }.sorted()
+            if dic.keys.contains(itemArray) {
+                var value = dic[itemArray]
+                value?.append(item)
+                dic[itemArray] = value
+            } else {
+                dic[itemArray] = [item]
+            }
+        }
+        var result = [[String]]()
+        for key in dic.keys {
+            result.append(dic[key]!)
+        }
+        return result
     }
     
     func rotate(_ matrix: inout [[Int]]) {
