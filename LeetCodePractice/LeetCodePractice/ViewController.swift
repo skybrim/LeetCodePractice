@@ -13,8 +13,31 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        print(groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]))
+        print(myPow(2.00000, -2))
     }
+    
+    func myPow(_ x: Double, _ n: Int) -> Double {
+        if x == 1.0 { return x }
+        if n == 0 { return 1 }
+        var result = 1.0, X = x, N = n
+        if n < 0 {
+            N = -n
+            X = 1 / x
+        }
+        func helper(_ x: Double, _ n: Int) -> Double {
+            if n == 0 { return 1.0 }
+            let half = helper(X, n / 2)
+            if n % 2 == 0 {
+                return half * half
+            } else {
+                return half * half * X
+            }
+        }
+        
+        return helper(X, N)
+    }
+    
+
     
     func groupAnagrams(_ strs: [String]) -> [[String]] {
         var dic = [[String] : [String]]()
