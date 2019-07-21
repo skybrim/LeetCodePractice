@@ -13,7 +13,21 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        print(myPow(2.00000, -2))
+        print(maxSubArray([1, 2]))
+    }
+    
+    func maxSubArray(_ nums: [Int]) -> Int {
+        var result = nums.first!
+        var sum = 0
+        for num in nums {
+            if sum > 0 {
+                sum += num
+            } else {
+                sum = num
+            }
+            result = max(sum, result)
+        }
+        return result
     }
     
     func myPow(_ x: Double, _ n: Int) -> Double {
@@ -38,7 +52,6 @@ class ViewController: UIViewController {
     }
     
 
-    
     func groupAnagrams(_ strs: [String]) -> [[String]] {
         var dic = [[String] : [String]]()
         for item in strs {
