@@ -13,8 +13,42 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        print(maxSubArray([1, 2]))
+        print(spiralOrder([[1,2,3,4],[5,6,7,8],[9,10,11,12]]))
     }
+    
+    func spiralOrder(_ matrix: [[Int]]) -> [Int] {
+        var result = [Int]()
+        if matrix.count == 0 {
+            return result
+        }
+        var s1 = 0, r1 = 0, s2 = matrix.count - 1, r2 = matrix.first!.count - 1
+        while s1 <= s2, r1 <= r2 {
+            for i in r1 ... r2 {
+                result.append(matrix[s1][i])
+            }
+            if s1 + 1 <= s2 {
+                for j in (s1 + 1) ... s2 {
+                    result.append(matrix[j][r2])
+                }
+            }
+            if r1 <= r2 - 1, s1 < s2 {
+                for k in (r1 ... (r2 - 1)).reversed() {
+                    result.append(matrix[s2][k])
+                }
+            }
+            if s1 + 1 <= s2 - 1, r1 < r2 {
+                for l in ((s1 + 1) ... (s2 - 1)).reversed() {
+                    result.append(matrix[l][r1])
+                }
+            }
+            s1 += 1
+            r2 -= 1
+            s2 -= 1
+            r1 += 1
+        }
+        return result
+    }
+    
     
     func maxSubArray(_ nums: [Int]) -> Int {
         var result = nums.first!
