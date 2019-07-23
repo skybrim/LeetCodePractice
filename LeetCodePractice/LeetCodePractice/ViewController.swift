@@ -13,7 +13,28 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        print(spiralOrder([[1,2,3,4],[5,6,7,8],[9,10,11,12]]))
+        print(canJump([3,2,1,0,4]))
+    }
+    
+    func canJump(_ nums: [Int]) -> Bool {
+        var result = false
+        if nums.count <= 1 {
+            return true
+        }
+        func help(lastIndex: Int) {
+            if lastIndex == 0 {
+                result = true
+                return
+            }
+            for i in (0 ..< lastIndex).reversed() {
+                if nums[i] + i >= lastIndex {
+                    help(lastIndex: i)
+                    break
+                }
+            }
+        }
+        help(lastIndex: nums.count - 1)
+        return result
     }
     
     func spiralOrder(_ matrix: [[Int]]) -> [Int] {
