@@ -13,7 +13,33 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        print(canJump([3,2,1,0,4]))
+        print(merge([[1,3],[2,6],[8,10],[15,18]]))
+    }
+    
+    func merge(_ intervals: [[Int]]) -> [[Int]] {
+        let sortedIntervals = intervals.sorted(by: { (nums1: [Int], nums2: [Int]) -> Bool in
+            return nums1.first! < nums2.first!
+        })
+        var results = [[Int]]()
+        for nums in sortedIntervals {
+            if let lastNums = results.last {
+                if lastNums.last! >= nums.first! {
+                    if lastNums.last! <= nums.last! {
+                        var tmpLastNums = results.last!
+                        tmpLastNums[1] = nums.last!
+                        results.removeLast()
+                        results.append(tmpLastNums)
+                    } else {
+                        continue
+                    }
+                } else {
+                    results.append(nums)
+                }
+            } else {
+                results.append(nums)
+            }
+        }
+        return results
     }
     
     func canJump(_ nums: [Int]) -> Bool {
