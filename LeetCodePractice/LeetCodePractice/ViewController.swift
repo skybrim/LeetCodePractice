@@ -13,7 +13,19 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        print(merge([[1,3],[2,6],[8,10],[15,18]]))
+        print(lengthOfLastWord("a "))
+    }
+    
+    func lengthOfLastWord(_ s: String) -> Int {
+        var result = 0
+        let str = s.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        for char in str.reversed() {
+            if char == " " {
+                return result
+            }
+            result += 1
+        }
+        return result
     }
     
     func merge(_ intervals: [[Int]]) -> [[Int]] {
