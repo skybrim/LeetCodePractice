@@ -13,7 +13,49 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        print(lengthOfLastWord("a "))
+        print(generateMatrix(4))
+    }
+    
+    func generateMatrix(_ n: Int) -> [[Int]] {
+        var result = [[Int]]()
+        var x = 1
+        let maxX = n * n
+        var s1 = 0, r1 = 0, s2 = n - 1, r2 = n - 1
+        while x <= maxX {
+            for i in r1 ... r2 {
+                if result.indices.contains(s1) == false {
+                    result.insert([Int](), at: s1)
+                }
+                result[s1].insert(x, at: i)
+                x += 1
+            }
+            if s1 + 1 <= s2 {
+                for j in (s1 + 1) ... s2 {
+                    if result.indices.contains(j) == false {
+                        result.insert([Int](), at: j)
+                    }
+                    result[j].insert(x, at: r1)
+                    x += 1
+                }
+            }
+            if r1 <= r2 - 1, s1 < s2 {
+                for _ in (r1 ... (r2 - 1)).reversed() {
+                    result[s2].insert(x, at: s1)
+                    x += 1
+                }
+            }
+            if s1 + 1 <= s2 - 1, r1 < r2 {
+                for l in ((s1 + 1) ... (s2 - 1)).reversed() {
+                    result[l].insert(x, at: r1)
+                    x += 1
+                }
+            }
+            s1 += 1
+            r2 -= 1
+            s2 -= 1
+            r1 += 1
+        }
+        return result
     }
     
     func lengthOfLastWord(_ s: String) -> Int {
