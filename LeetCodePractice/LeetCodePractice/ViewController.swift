@@ -13,7 +13,33 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        print(generateMatrix(4))
+        print(getPermutation(4, 10))
+    }
+    
+    func getPermutation(_ n: Int, _ k: Int) -> String {
+        var result = [Int]()
+        var nums = [Int]()
+        for i in 1 ... n {
+            nums += [i]
+        }
+        var tmpK = k
+        while nums.count > 0 {
+            var tmpMaxResultCount = 1
+            if nums.count > 2 {
+                for i in 1 ... (nums.count - 1) {
+                    tmpMaxResultCount *= i
+                }
+            }
+            let index = Int(ceil(Double(tmpK) / Double(tmpMaxResultCount))) - 1
+            tmpK = tmpK - tmpMaxResultCount * index
+            result.append(nums[index])
+            nums.remove(at: index)
+        }
+        var resultString = ""
+        for i in result {
+            resultString += String(i)
+        }
+        return resultString
     }
     
     func generateMatrix(_ n: Int) -> [[Int]] {
