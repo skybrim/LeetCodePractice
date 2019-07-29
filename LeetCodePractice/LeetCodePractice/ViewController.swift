@@ -13,7 +13,40 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        print(getPermutation(4, 10))
+        print(uniquePaths(19, 13))
+    }
+    
+//    func uniquePaths(_ m: Int, _ n: Int) -> Int {
+//        // (m+n-2)! / ((m-1)! * (m+n-2 - (m-1))!)
+//        //
+//        let a = m + n - 2
+//        let b = m - 1
+//        let c = a - b
+//        func getFactorIal(num: Int) -> Int {
+//            var sum = 1
+//            for i in 1...num {
+//                sum *= i
+//            }
+//            return sum
+//        }
+//
+//        return getFactorIal(num: a) / (getFactorIal(num: b) * getFactorIal(num: c))
+//    }
+    
+    func uniquePaths(_ m: Int, _ n: Int) -> Int {
+        var storeDic = [[Int] : Int]()
+        func help(h: Int, v: Int) -> Int {
+            if h == 1 || v == 1 {
+                return 1
+            }
+            if storeDic.keys.contains([h, v]) {
+                return storeDic[[h, v]]!
+            } else {
+                storeDic[[h ,v]] = help(h: h - 1, v: v) + help(h: h, v: v - 1)
+            }
+            return help(h: h - 1, v: v) + help(h: h, v: v - 1)
+        }
+        return help(h: m, v: n)
     }
     
     func getPermutation(_ n: Int, _ k: Int) -> String {
