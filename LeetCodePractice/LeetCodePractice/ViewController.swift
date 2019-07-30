@@ -13,7 +13,41 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        print(uniquePaths(19, 13))
+        print(uniquePathsWithObstacles([
+            [1,0]
+            ]))
+    }
+    
+    func uniquePathsWithObstacles(_ obstacleGrid: [[Int]]) -> Int {
+        var m = obstacleGrid.count
+        if m == 0 {
+            return 0
+        }
+        var n = obstacleGrid.first!.count
+        var storeDic = [[Int] : Int]()
+        func help(h: Int, v: Int) -> Int {
+            if obstacleGrid[h-1][v-1] == 1 {
+                return 0
+            }
+            if h == 1, v == 1 {
+                return 1
+            }
+            if storeDic.keys.contains([h, v]) {
+                return storeDic[[h, v]]!
+            } else {
+                var tmp = 1;
+                if h == 1, v > 1 {
+                    tmp = help(h: h, v: v - 1)
+                } else if h > 1, v == 1 {
+                    tmp = help(h: h - 1, v: v)
+                } else {
+                    tmp = help(h: h - 1, v: v) + help(h: h, v: v - 1)
+                }
+                storeDic[[h, v]] = tmp
+                return tmp
+            }
+        }
+        return help(h: m, v: n)
     }
     
 //    func uniquePaths(_ m: Int, _ n: Int) -> Int {
