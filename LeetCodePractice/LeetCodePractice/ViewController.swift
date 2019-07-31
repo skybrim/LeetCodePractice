@@ -13,9 +13,41 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        print(uniquePathsWithObstacles([
-            [1,0]
+        print(minPathSum([
+            [1,3,1],
+            [1,5,1],
+            [4,2,1]
             ]))
+    }
+    
+    func minPathSum(_ grid: [[Int]]) -> Int {
+        var m = grid.count
+        if m == 0 {
+            return 0
+        }
+        var n = grid.first!.count
+        var storeDic = [[Int] : Int]()
+        func help(h: Int, v: Int) -> Int {
+            let lastNum = grid[h-1][v-1]
+            var minSum = 0
+            if h == 1, v == 1 {
+                minSum = 0
+            } else if storeDic.keys.contains([h, v]) {
+                minSum = storeDic[[h, v]]!
+            } else {
+                if h == 1, v > 1 {
+                    minSum = help(h: h, v: v - 1)
+                } else if h > 1, v == 1 {
+                    minSum = help(h: h - 1, v: v)
+                } else if h > 1, v > 1 {
+                    minSum = min(help(h: h, v: v - 1), help(h: h - 1, v: v))
+                }
+                storeDic[[h, v]] = minSum
+            }
+            let sum = lastNum + minSum
+            return sum
+        }
+        return help(h: m, v: n)
     }
     
     func uniquePathsWithObstacles(_ obstacleGrid: [[Int]]) -> Int {
