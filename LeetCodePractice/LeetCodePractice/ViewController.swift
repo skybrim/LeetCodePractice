@@ -13,12 +13,29 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        print(minPathSum([
-            [1,3,1],
-            [1,5,1],
-            [4,2,1]
-            ]))
+        print(plusOne([1, 2, 3, 4, 5, 9]))
     }
+    
+    func plusOne(_ digits: [Int]) -> [Int] {
+        var results = digits
+        if Set(digits).count == 1, digits.contains(9) {
+            results = [1] + Array(repeating: 0, count: digits.count)
+            return results
+        }
+        for i in digits.indices.reversed() {
+            if digits[i] != 9 {
+                results[i] = results[i] + 1
+                if i < digits.count - 1 {
+                    for j in i + 1 ... digits.count - 1 {
+                        results[j] = 0
+                    }
+                }
+                break
+            }
+        }
+        return results
+    }
+    
     
     func minPathSum(_ grid: [[Int]]) -> Int {
         var m = grid.count
