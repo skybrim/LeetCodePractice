@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        print(plusOne([1, 2, 3, 4, 5, 9]))
+        print(lengthOfLongestSubstring("pwwkew"))
     }
     
     func plusOne(_ digits: [Int]) -> [Int] {
@@ -669,30 +669,37 @@ class ViewController: UIViewController {
     
     //给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
     func twoSum(_ nums: [Int], _ target: Int) -> [Int] {
-        for i in 0..<nums.count {
-            for j in i+1..<nums.count {
-                if nums[i] + nums[j] == target {
-                    return [i, j]
-                }
+        var storeDic = [Int: Int]()
+        for (i, num) in nums.enumerated() {
+            if let anotherIndex = storeDic[num] {
+                return [anotherIndex, i]
             }
+            storeDic[target - num] = i
         }
         return []
     }
     
     //给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
     func lengthOfLongestSubstring(_ s: String) -> Int {
+        if s.count == 0 { return 0 }
+        var result = 1
         let strings = s.map{ String($0) }
         var start = 0
-        var end = 0
-        for _ in 0..<strings.count {
-            if Set(strings[start...end]).count == strings[start...end].count {
-                end += 1
-            } else {
-                start += 1
-                end += 1
+        var end = 1
+        while end < strings.count {
+            if strings[start ..< end].contains(strings[end]) {
+                result = max(end - start, result)
+                if result >= (strings.count + 1) / 2, end >= (strings.count + 1) / 2 {
+                    break
+                }
+                //发生重复
+                //找到重复数字的索引，+ 1，并赋值给 start
+                start = strings[start ..< end].firstIndex(of: strings[end])! + 1
             }
+            end += 1
         }
-        return end-start
+        result = max(end - start, result)
+        return result
     }
     
     func findMedianSortedArrays(_ nums1: [Int], _ nums2: [Int]) -> Double {
