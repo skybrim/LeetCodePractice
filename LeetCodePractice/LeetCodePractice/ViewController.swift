@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        print(lengthOfLongestSubstring("pwwkew"))
+        print(longestCommonPrefix(["flower","flow","flight"]))
     }
     
     func plusOne(_ digits: [Int]) -> [Int] {
@@ -923,63 +923,65 @@ class ViewController: UIViewController {
     
     func romanToInt(_ s: String) -> Int {
         if s.count == 0 { return 0 }
-        let singleStrs = ["M", "D", "C", "L", "X", "V", "I",]
-        let doubleStrs = ["CM", "CD", "XC", "XL", "IX", "IV", ]
-        let singleValues = [1000, 500, 100, 50, 10, 5, 1,]
-        let doubleValues = [900, 400, 90, 40, 9, 4,]
-        var romanStr = s
+        let dic = ["M":1000, "D":500, "C":100, "L":50, "X":10, "V":5, "I":1, "CM":800, "CD":300, "XC":80, "XL":30, "IX":8, "IV":3]
         var result = 0
-        for i in 0 ..< doubleStrs.count {
-            if romanStr.contains(doubleStrs[i]) {
-                romanStr = romanStr.replacingOccurrences(of: doubleStrs[i], with: "")
-                result += doubleValues[i]
-            }
-        }
-        var leftStrings = romanStr.map{ String($0) }
-        for j in 0 ..< singleStrs.count {
-            if leftStrings.contains(singleStrs[j]) {
-                repeat {
-                    result += singleValues[j]
-                    if leftStrings.count == 0 { break }
-                    leftStrings.removeFirst()
-                } while leftStrings.first == singleStrs[j]
+        for (i, char) in s.enumerated() {
+            let key = String(char)
+            if let tmpSingle = dic[key] {
+                let stringIndex = s.index(s.startIndex, offsetBy: max(i - 1, 0))
+                let lastSingle = String(s[stringIndex])
+                if let tmpDouble = dic[lastSingle + key] {
+                    result += tmpDouble
+                } else {
+                    result += tmpSingle
+                }
             }
         }
         return result
     }
     
-    
     func longestCommonPrefix(_ strs: [String]) -> String {
         if strs.count == 0 { return "" }
+        if strs.count == 1 { return strs.first! }
+        //找到长度最小的字符串
+        var minStrLength = INTPTR_MAX
+        for str in strs {
+            minStrLength = min(minStrLength, str.count)
+        }
+        if minStrLength == 0 { return "" }
+        //二分查找
+        var left = 0
+        var right = minStrLength - 1
+        var mid = 0
+        let firstStr = strs.first!
         var isDiff = false
-        var count = 0
-        var char: Character
-        while isDiff != true {
-            if strs.first!.count == count { return "" }
-            char = strs.first![strs.first!.index(strs.first!.startIndex, offsetBy: count)]
-            for string in strs {
-                if count < string.count {
-                    if string[string.index(string.startIndex, offsetBy: count)] != char {
-                        isDiff = true
-                        break
-                    }
-                } else {
-                    isDiff = true
-                    break
+        var common = ""
+        func helpToIndex(num: Int) -> String.Index {
+            return firstStr.index(firstStr.startIndex, offsetBy: num)
+        }
+        func helpDiff(common: String) -> Bool {
+            for str in strs {
+                guard str.hasPrefix(common) else {
+                    return true
                 }
             }
-            if isDiff == false {
-                count += 1
-            }
-            if strs.first!.count == count {
-                isDiff = true
+            return false
+        }
+        while left <= right {
+            isDiff = false
+            mid = (right - left) / 2 + left
+            let midIndex = helpToIndex(num: mid)
+            common = String(firstStr[...midIndex])
+            isDiff = helpDiff(common: common)
+            if isDiff {
+                right = mid - 1
+            } else {
+                left = mid + 1
             }
         }
-        count -= 1
-        if count < 0 {
-            return ""
-        }
-        return String(strs.first![strs.first!.startIndex ... strs.first!.index(strs.first!.startIndex, offsetBy: count)])
+        mid = (right - left) / 2 + left - 1
+        if mid < 0 { return "" }
+        return String(firstStr[helpToIndex(num: 0) ... helpToIndex(num: mid)])
     }
     
     
