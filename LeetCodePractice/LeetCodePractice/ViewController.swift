@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        print(longestCommonPrefix(["flower","flow","flight"]))
+        print(threeSum([0,0,0,]))
     }
     
     func plusOne(_ digits: [Int]) -> [Int] {
@@ -984,29 +984,36 @@ class ViewController: UIViewController {
         return String(firstStr[helpToIndex(num: 0) ... helpToIndex(num: mid)])
     }
     
-    
     func threeSum(_ nums: [Int]) -> [[Int]] {
-        if nums.count < 3 { return [] }
-        var input = Array(nums)
-        input = input.sorted()
-        if input.first == input.last, input.first == 0 { return [[0, 0, 0]] }
-        if input.first! >= 0, input.last! <= 0 { return [] }
-        var result = [[Int]]()
-        for i in 0 ..< input.count {
-            var hash = [Int:[Int]]()
-            for j in i+1 ..< input.count {
-                if let _ = hash[input[j]] {
-                    var res = Array(hash[input[j]]!)
-                    res.append(input[j])
-                    result.append(res)
-                    hash[input[j]] = nil
-                } else {
-                    let tmp = input[i] + input[j]
-                    hash[-tmp] = [input[i],input[j]]
+        guard nums.count >= 3 else {
+            return []
+        }
+        var input = nums.sorted()
+        if input.first! > 0 || input.last! < 0 { return [] }
+        var res = Set<[Int]>()
+        
+        for (i, num1) in input[0 ..< nums.count - 2].enumerated() {
+            if num1 > 0 {
+                break
+            }
+            if i > 0, num1 == input[i - 1] {
+                continue
+            }
+            var j = i + 1, k = input.count - 1
+            while input[k] >= 0, j < k {
+                let sum = num1 + input[j] + input[k]
+                if sum == 0 {
+                    res.insert([num1, input[j], input[k]])
+                    k -= 1
+                    j += 1
+                } else if sum > 0 {
+                    k -= 1
+                } else if sum < 0 {
+                    j += 1
                 }
             }
         }
-        return Array(Set(result))
+        return Array(res)
     }
     
     func threeSumClosest(_ nums: [Int], _ target: Int) -> Int {
