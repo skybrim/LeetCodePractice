@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        print(threeSum([0,0,0,]))
+        print(fourSum([1,-2,-5,-4,-3,3,3,5],-11))
     }
     
     func plusOne(_ digits: [Int]) -> [Int] {
@@ -1075,28 +1075,31 @@ class ViewController: UIViewController {
     
     func fourSum(_ nums: [Int], _ target: Int) -> [[Int]] {
         if nums.count < 4 { return [] }
-        var input = Array(nums)
-        input = input.sorted()
-        if input.first! > target, input.last! < target { return [] }
-        var hash = [Int : [Int]]()
-        var result = [[Int]]()
-        for i in 0 ..< input.count {
-            for j in i + 1 ..< input.count {
-                for k in j + 1 ..< input.count {
-                    if hash.keys.contains(nums[k]) {
-                        var tmp = [nums[k]] + hash[nums[k]]!
-                        tmp = tmp.sorted()
-                        result.append(tmp)
-                    } else {
-                        hash[target - (nums[i] + nums[j] + nums[k])] = [nums[i], nums[j], nums[k]]
-                    }
-                    if k == input.count - 1 {
-                        hash.removeAll()
+        var input = nums.sorted()
+        var tmpSum = 0
+        var res = Set<[Int]>()
+        var threeSum = 0
+        var threeInput = [Int]()
+        for (i, num1) in input.enumerated() {
+            //转化为三数之和
+            threeSum = target - num1
+            threeInput = Array(input[i + 1 ..< input.count])
+            for (j, _) in threeInput.enumerated() {
+                var start = j + 1, end = threeInput.count - 1
+                while start < end {
+                    tmpSum = threeInput[j] + threeInput[start] + threeInput[end]
+                    if tmpSum == threeSum {
+                        res.insert([input[i], threeInput[j], threeInput[start], threeInput[end]])
+                        start += 1
+                        end -= 1
+                    } else if tmpSum > threeSum {
+                        end -= 1
+                    } else if tmpSum < threeSum {
+                        start += 1
                     }
                 }
             }
         }
-        let tmpResult = Set(result)
-        return Array(tmpResult)
+        return Array(res)
     }
 }
