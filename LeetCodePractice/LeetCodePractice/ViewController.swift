@@ -13,8 +13,56 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        print(fourSum([1,-2,-5,-4,-3,3,3,5],-11))
     }
+    
+    
+    public class ListNode {
+        public var val: Int
+        public var next: ListNode?
+        public init(_ val: Int) {
+            self.val = val
+            self.next = nil
+        }
+    }
+    
+    func addTwoNumberNewNode(_ l1: ListNode?, _ l2: ListNode?, _ pre: ListNode?) -> ListNode? {
+        var next1: ListNode?
+        var next2: ListNode?
+        var val1 = 0
+        var val2 = 0
+        if let l1 = l1 {
+            next1 = l1.next
+            val1 = l1.val
+        }
+        if let l2 = l2 {
+            next2 = l2.next
+            val2 = l2.val
+        }
+        let l3 = ListNode(val1 + val2)
+        if let pre = pre {
+            if pre.val >= 10 {
+                l3.val += 1
+            }
+        }
+        if next1 == nil && next2 == nil {
+            if l3.val >= 10 {
+                l3.next = ListNode(1)
+            } else {
+                l3.next = nil
+            }
+        } else {
+            l3.next = addTwoNumberNewNode(next1, next2, l3)
+        }
+        if l3.val >= 10 {
+            l3.val -= 10
+        }
+        return l3
+    }
+    
+    func addTwoNumbers(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
+        return addTwoNumberNewNode(l1, l2, nil)
+    }
+    
     
     func plusOne(_ digits: [Int]) -> [Int] {
         var results = digits
