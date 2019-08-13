@@ -13,6 +13,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        print(isValid("()"))
     }
     
     
@@ -698,14 +700,18 @@ class ViewController: UIViewController {
         if s.count % 2 != 0 { return false }
         var hash = ["{" : "}", "[" : "]", "(" : ")",]
         var stack = [String]()
-        for i in 0 ..< s.count {
-            if let last = stack.last,
-                hash.keys.contains(last),
-                String(s[s.index(s.startIndex, offsetBy: i)]) == hash[last]
-            {
-                stack.removeLast()
+        for char in s {
+            if hash.keys.contains(String(char)) {
+                stack.append(String(char))
             } else {
-                stack.append(String(s[s.index(s.startIndex, offsetBy: i)]))
+                guard let last = stack.last else {
+                    return false
+                }
+                if String(char) != hash[last] {
+                    return false
+                } else {
+                    stack.removeLast()
+                }
             }
         }
         if stack.count == 0 {
