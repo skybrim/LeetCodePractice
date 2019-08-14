@@ -27,6 +27,23 @@ class ViewController: UIViewController {
         }
     }
     
+    func removeNthFromEnd(_ head: ListNode?, _ n: Int) -> ListNode? {
+        let tmpNode = ListNode(0)
+        tmpNode.next = head
+        var firstNode: ListNode?, secondeNode: ListNode?
+        firstNode = tmpNode
+        secondeNode = tmpNode
+        for _ in 1 ... n {
+            firstNode = firstNode?.next
+        }
+        while firstNode?.next != nil {
+            secondeNode = secondeNode?.next
+            firstNode = firstNode?.next
+        }
+        secondeNode?.next = secondeNode?.next?.next
+        return tmpNode.next
+    }
+    
     func addTwoNumberNewNode(_ l1: ListNode?, _ l2: ListNode?, _ pre: ListNode?) -> ListNode? {
         var next1: ListNode?
         var next2: ListNode?
