@@ -17,7 +17,6 @@ class ViewController: UIViewController {
         print(isValid("()"))
     }
     
-    
     public class ListNode {
         public var val: Int
         public var next: ListNode?
@@ -25,6 +24,18 @@ class ViewController: UIViewController {
             self.val = val
             self.next = nil
         }
+    }
+    
+    func swapPairs(_ head: ListNode?) -> ListNode? {
+        guard let head = head else {
+            return nil
+        }
+        if let next = head.next {
+            head.next = swapPairs(next.next)
+            next.next = head
+            return next
+        }
+        return head
     }
     
     func removeNthFromEnd(_ head: ListNode?, _ n: Int) -> ListNode? {
