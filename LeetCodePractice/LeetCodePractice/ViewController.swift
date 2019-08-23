@@ -26,6 +26,23 @@ class ViewController: UIViewController {
         }
     }
     
+    func reverseList(_ head: ListNode?) -> ListNode? {
+        guard let head = head else {
+            return nil
+        }
+        let next = head.next
+        head.next = nil
+        func help(_ pre: ListNode, _ next: ListNode?) -> ListNode? {
+            guard let next = next else {
+                return pre
+            }
+            let tmpNext = next.next
+            next.next = pre
+            return help(next, tmpNext)
+        }
+        return help(head, next)
+    }
+    
     func swapPairs(_ head: ListNode?) -> ListNode? {
         guard let head = head else {
             return nil
