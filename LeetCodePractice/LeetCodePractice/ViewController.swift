@@ -14,7 +14,34 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        print(isValid("()"))
+        print(climbStairs(8))
+    }
+    
+    func climbStairs(_ n: Int) -> Int {
+        var storeDic = [Int: Int]()
+        func help(_ step: Int) -> Int {
+            if step == 1 {
+                return 1
+            }
+            if step == 2 {
+                return 2
+            }
+            var s1 = 0, s2 = 0
+            if let tmp = storeDic[step - 1] {
+                s1 = tmp
+            } else {
+                s1 = help(step - 1)
+                storeDic[step - 1] = s1
+            }
+            if let tmp = storeDic[step - 2] {
+                s2 = tmp
+            } else {
+                s2 = help(step - 2)
+                storeDic[step - 2] = s2
+            }
+            return s1 + s2
+        }
+        return help(n)
     }
     
     public class ListNode {
