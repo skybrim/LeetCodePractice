@@ -14,7 +14,12 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        print(climbStairs(8))
+        print(findKthLargest([3,2,3,1,2,4,5,5,6], 4))
+    }
+    
+    func findKthLargest(_ nums: [Int], _ k: Int) -> Int {
+        let sortedNum = nums.sorted()
+        return sortedNum[nums.count - k]
     }
     
     func climbStairs(_ n: Int) -> Int {
