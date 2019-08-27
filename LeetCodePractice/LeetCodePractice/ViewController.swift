@@ -14,7 +14,26 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        print(findKthLargest([3,2,3,1,2,4,5,5,6], 4))
+        print("")
+        var nums1 = [1,2,3,0,0,0]
+        merge(&nums1, 3, [2,5,6], 3)
+    }
+    
+    func merge(_ nums1: inout [Int], _ m: Int, _ nums2: [Int], _ n: Int) {
+        var i = 0
+        var tmpm = m
+        for tmp in nums2 {
+            while nums1[i] < tmp {
+                if i == tmpm {
+                    break
+                }
+                i += 1
+            }
+            nums1.insert(tmp, at: i)
+            nums1.removeLast()
+            tmpm += 1
+        }
+//        print(nums1)
     }
     
     func findKthLargest(_ nums: [Int], _ k: Int) -> Int {
