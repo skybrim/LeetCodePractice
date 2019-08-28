@@ -14,9 +14,28 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        print("")
+        print(maxProfit([2,1,2,1,0,1,2]))
         var nums1 = [1,2,3,0,0,0]
         merge(&nums1, 3, [2,5,6], 3)
+        
+        
+    }
+    
+    func maxProfit(_ prices: [Int]) -> Int {
+        guard prices.count > 1 else {
+            return 0
+        }
+        var buyIndex = 0, sellIndex = 1, maxRes = 0
+        for _ in 1 ... prices.count - 1 {
+            if prices[sellIndex] - prices[buyIndex] < 0 {
+                buyIndex = sellIndex
+            } else {
+                maxRes = max(maxRes, prices[sellIndex] - prices[buyIndex])
+            }
+            sellIndex += 1
+        }
+        
+        return maxRes
     }
     
     func merge(_ nums1: inout [Int], _ m: Int, _ nums2: [Int], _ n: Int) {
