@@ -22,9 +22,7 @@ class ViewController: UIViewController {
             return "0"
         }
         var res = nums.map{ String($0) }
-        res.sort { (s1: String, s2: String) -> Bool in
-            return Int(s1 + s2)! > Int(s2 + s1)!
-        }
+        res.sort(by: { Int($0 + $1)! > Int($1 + $0)!})
         if let firstNum = res.first {
             if firstNum == "0" {
                 return "0"
