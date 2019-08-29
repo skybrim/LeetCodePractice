@@ -14,11 +14,23 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        print(maxProfit([2,1,2,1,0,1,2]))
-        var nums1 = [1,2,3,0,0,0]
-        merge(&nums1, 3, [2,5,6], 3)
-        
-        
+        print(largestNumber([3,30,34,5,9]))
+    }
+    
+    func largestNumber(_ nums: [Int]) -> String {
+        guard nums.count > 0 else {
+            return "0"
+        }
+        var res = nums.map{ String($0) }
+        res.sort { (s1: String, s2: String) -> Bool in
+            return Int(s1 + s2)! > Int(s2 + s1)!
+        }
+        if let firstNum = res.first {
+            if firstNum == "0" {
+                return "0"
+            }
+        }
+        return res.joined()
     }
     
     func maxProfit(_ prices: [Int]) -> Int {
