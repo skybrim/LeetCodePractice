@@ -14,8 +14,34 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        print(largestNumber([3,30,34,5,9]))
+        print(lengthOfLIS([10,9,2,5,3,7,101,18]))
     }
+    
+    //最长上升子序列  动态规划结题
+    func lengthOfLIS(_ nums: [Int]) -> Int {
+        if nums.count == 0 {
+            return 0
+        }
+        //子数组的 最大升序子序列 的解 的集合
+        var subs = [1]
+        var result = 1
+        //没增加一个新的元素，都要遍历所有子数组，判断最大的升序子序列
+        for i in 1 ..< nums.count {
+            var subMax = 0
+            for j in 0 ..< i {
+                if nums[j] < nums[i] {
+                    subMax = max(subMax, subs[j])
+                }
+            }
+            //subMax 是 0到j & 小于nums[i] 的最大升序子序列
+            //所以需要 + 1
+            subs.append(subMax + 1)
+            //取最大值
+            result = max(result, subs[i])
+        }
+        return result
+    }
+    
     
     func largestNumber(_ nums: [Int]) -> String {
         guard nums.count > 0 else {
