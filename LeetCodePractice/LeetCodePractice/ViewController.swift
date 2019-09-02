@@ -14,29 +14,67 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        print(lengthOfLIS([10,9,2,5,3,7,101,18]))
+        print(lengthOfLIS([1,3,6,7,9,4,10,5,6]))
+    }
+
+    //零钱兑换 动态规划
+    //暴力解法
+    func coinChange_a(_ coins: [Int], _ amount: Int) -> Int {
+        if amount == 0 { return 0 }
+        var res = Int.max
+        for coin in coins {
+            if amount - coin < 0 { continue }
+            let tmp = coinChange_a(coins, amount - coin)
+            if tmp == -1 { continue }
+            res = min(res, tmp + 1)
+        }
+        return res == Int.max ? -1 : Int(res)
+    }
+    //备忘录+暴力
+    func coinChange_b(_ coins: [Int], _ amount: Int) -> Int {
+        func help(_ coins: [Int], _ amount: Int, _ memory: inout [Int]) -> Int {
+            if amount == 0 { return 0 }
+            if memory[amount] != -2 { return memory[amount] }
+            var res = Int.max
+            for coin in coins {
+                if amount - coin < 0 { continue }
+                let tmp = help(coins, amount - coin, &memory)
+                if tmp == -1 { continue }
+                res = min(res, tmp + 1)
+            }
+            memory[amount] = res == Int.max ? -1 : Int(res)
+            return memory[amount]
+        }
+        
+        var memory = Array(repeating: -2, count: amount + 1)
+        return help(coins, amount, &memory)
+    }
+    //动态规划
+    func coinChange(_ coins: [Int], _ amount: Int) -> Int {
+        if amount == 0 { return 0 }
+        var memory = Array(repeating: amount + 1, count: amount + 1)
+        memory[0] = 0
+        for i in 1 ... amount {
+            for coin in coins {
+                if i - coin >= 0 {
+                    memory[i] = min(memory[i], memory[i - coin] + 1)
+                }
+            }
+        }
+        return memory[amount] > amount ? -1 : memory[amount]
     }
     
     //最长上升子序列  动态规划结题
     func lengthOfLIS(_ nums: [Int]) -> Int {
-        if nums.count == 0 {
-            return 0
-        }
-        //子数组的 最大升序子序列 的解 的集合
-        var subs = [1]
+        if nums.count == 0 { return 0 }
+        var subs = Array(repeating: 1, count: nums.count)
         var result = 1
-        //没增加一个新的元素，都要遍历所有子数组，判断最大的升序子序列
         for i in 1 ..< nums.count {
-            var subMax = 0
             for j in 0 ..< i {
                 if nums[j] < nums[i] {
-                    subMax = max(subMax, subs[j])
+                    subs[i] = max(subs[i], subs[j] + 1)
                 }
             }
-            //subMax 是 0到j & 小于nums[i] 的最大升序子序列
-            //所以需要 + 1
-            subs.append(subMax + 1)
-            //取最大值
             result = max(result, subs[i])
         }
         return result
