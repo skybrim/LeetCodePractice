@@ -14,8 +14,25 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        print(lengthOfLIS([1,3,6,7,9,4,10,5,6]))
+        print(generate(5))
     }
+    //杨辉三角
+    func generate(_ numRows: Int) -> [[Int]] {
+        if numRows == 0 { return [] }
+        if numRows == 1 {return [[1]]}
+        var res = [[1], [1, 1]]
+        if numRows == 2 { return res }
+        for row in 2 ... numRows - 1 {
+            var rowNums = Array(repeating: 1, count: row + 1)
+            let lastRowNums = res[row - 1]
+            for i in 1 ..< rowNums.count - 1 {
+                rowNums[i] = lastRowNums[i - 1] + lastRowNums[i]
+            }
+            res.append(rowNums)
+        }
+        return res
+    }
+    
 
     //零钱兑换 动态规划
     //暴力解法
