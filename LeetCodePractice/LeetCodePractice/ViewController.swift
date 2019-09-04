@@ -14,7 +14,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        print(generate(5))
+        print(climbStairs_a(10))
     }
     //杨辉三角
     func generate(_ numRows: Int) -> [[Int]] {
@@ -62,7 +62,6 @@ class ViewController: UIViewController {
             memory[amount] = res == Int.max ? -1 : Int(res)
             return memory[amount]
         }
-        
         var memory = Array(repeating: -2, count: amount + 1)
         return help(coins, amount, &memory)
     }
@@ -97,6 +96,83 @@ class ViewController: UIViewController {
         return result
     }
     
+    /*
+     func coinChange_a(_ coins: [Int], _ amount: Int) -> Int {
+     if amount == 0 { return 0 }
+     var res = Int.max
+     for coin in coins {
+     if amount - coin < 0 { continue }
+     let tmp = coinChange_a(coins, amount - coin)
+     if tmp == -1 { continue }
+     res = min(res, tmp + 1)
+     }
+     return res == Int.max ? -1 : Int(res)
+     }
+     */
+    
+    //爬楼梯 暴力
+    func climbStairs_a(_ n: Int) -> Int {
+        guard n > 2 else {
+            return n
+        }
+        let steps = [1, 2]
+        var res = 0
+        for curStep in steps {
+            if n - curStep < 0 { continue }
+            res += climbStairs(n - curStep)
+        }
+        return res
+    }
+    //爬楼梯 暴力递归
+    func climbStairs_b(_ n: Int) -> Int {
+        guard n > 2 else {
+            return n
+        }
+        return climbStairs_b(n - 1) + climbStairs_b(n - 2)
+    }
+    //爬楼梯 记忆化递归
+    func climbStairs_c(_ n: Int) -> Int {
+        guard n > 2 else {
+            return n
+        }
+        var store = Array(repeating: 0, count: n + 1)
+        store[1] = 1
+        store[2] = 2
+        func help(_ step: Int) -> Int {
+            if store[step] != 0 { return store[step] }
+            store[step] = help(step - 1) + help(step - 2)
+            return store[step]
+        }
+        return help(n)
+    }
+    //爬楼梯 动态规划
+    func climbStairs(_ n: Int) -> Int {
+        guard n > 2 else {
+            return n
+        }
+        var res = Array(repeating: 0, count: n + 1)
+        res[1] = 1
+        res[2] = 2
+        for i in 3 ... n {
+            res[i] = res[i - 1] + res[i - 2]
+        }
+        return res[n]
+    }
+    
+    func climbStairs_s(_ n: Int) -> Int {
+        guard n > 2 else {
+            return n
+        }
+        var res = 0
+        var pre_1 = 1
+        var pre_2 = 2
+        for _ in 3 ... n {
+            res = pre_1 + pre_2
+            pre_1 = pre_2
+            pre_2 = res
+        }
+        return res
+    }
     
     func largestNumber(_ nums: [Int]) -> String {
         guard nums.count > 0 else {
@@ -149,33 +225,6 @@ class ViewController: UIViewController {
     func findKthLargest(_ nums: [Int], _ k: Int) -> Int {
         let sortedNum = nums.sorted()
         return sortedNum[nums.count - k]
-    }
-    
-    func climbStairs(_ n: Int) -> Int {
-        var storeDic = [Int: Int]()
-        func help(_ step: Int) -> Int {
-            if step == 1 {
-                return 1
-            }
-            if step == 2 {
-                return 2
-            }
-            var s1 = 0, s2 = 0
-            if let tmp = storeDic[step - 1] {
-                s1 = tmp
-            } else {
-                s1 = help(step - 1)
-                storeDic[step - 1] = s1
-            }
-            if let tmp = storeDic[step - 2] {
-                s2 = tmp
-            } else {
-                s2 = help(step - 2)
-                storeDic[step - 2] = s2
-            }
-            return s1 + s2
-        }
-        return help(n)
     }
     
     public class ListNode {
