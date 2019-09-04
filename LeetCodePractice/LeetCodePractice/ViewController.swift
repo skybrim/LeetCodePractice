@@ -852,19 +852,19 @@ class ViewController: UIViewController {
     
     func removeElement(_ nums: inout [Int], _ val: Int) -> Int {
         var i = 0
-        while i < nums.count {
-            if nums[i] == val {
-                nums[i] = nums[nums.count - 1]
-                nums.removeLast()
-            } else {
+        for num in nums {
+            if num != val {
+                nums[i] = num
                 i += 1
             }
         }
-        return nums.count
+        return i
     }
     
     func removeDuplicates(_ nums: inout [Int]) -> Int {
-        if nums.count == 0 { return 0 }
+        guard nums.count > 0 else {
+            return 0
+        }
         var i = 0
         for j in 1 ..< nums.count {
             if nums[i] != nums[j] {
