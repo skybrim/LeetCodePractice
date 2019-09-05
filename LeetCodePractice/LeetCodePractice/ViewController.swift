@@ -96,20 +96,6 @@ class ViewController: UIViewController {
         return result
     }
     
-    /*
-     func coinChange_a(_ coins: [Int], _ amount: Int) -> Int {
-     if amount == 0 { return 0 }
-     var res = Int.max
-     for coin in coins {
-     if amount - coin < 0 { continue }
-     let tmp = coinChange_a(coins, amount - coin)
-     if tmp == -1 { continue }
-     res = min(res, tmp + 1)
-     }
-     return res == Int.max ? -1 : Int(res)
-     }
-     */
-    
     //爬楼梯 暴力
     func climbStairs_a(_ n: Int) -> Int {
         guard n > 2 else {
