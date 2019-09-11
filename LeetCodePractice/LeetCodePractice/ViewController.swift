@@ -14,7 +14,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        print(subsets([1, 2, 3]))
+        
+        
+        print(Dictionary("string".map{ ($0, 1) }, uniquingKeysWith: +))
     }
     
     //子集 位运算
@@ -695,22 +697,18 @@ class ViewController: UIViewController {
     
 
     func groupAnagrams(_ strs: [String]) -> [[String]] {
-        var dic = [[String] : [String]]()
-        for item in strs {
-            let itemArray = item.map{ String($0) }.sorted()
-            if dic.keys.contains(itemArray) {
-                var value = dic[itemArray]
-                value?.append(item)
-                dic[itemArray] = value
-            } else {
-                dic[itemArray] = [item]
-            }
+        var dic = [[Character]: [String]]()
+        for string in strs {
+            let key = string.sorted()
+            var tmpArray = dic[key] ?? [String]()
+            tmpArray.append(string)
+            dic[key] = tmpArray
         }
-        var result = [[String]]()
-        for key in dic.keys {
-            result.append(dic[key]!)
+        var res = [[String]]()
+        for (_, value) in dic {
+            res.append(value)
         }
-        return result
+        return res
     }
     
     func rotate(_ matrix: inout [[Int]]) {
