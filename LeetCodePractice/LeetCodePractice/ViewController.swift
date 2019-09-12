@@ -16,7 +16,7 @@ class ViewController: UIViewController {
         
         
         
-        print(Dictionary("string".map{ ($0, 1) }, uniquingKeysWith: +))
+        print(canJump([1,2,1,0,2,1,2,1,0]))
     }
     
     //子集 位运算
@@ -606,25 +606,35 @@ class ViewController: UIViewController {
     }
     
     func canJump(_ nums: [Int]) -> Bool {
-        var result = false
-        if nums.count <= 1 {
-            return true
-        }
-        func help(lastIndex: Int) {
-            if lastIndex == 0 {
-                result = true
-                return
-            }
-            for i in (0 ..< lastIndex).reversed() {
-                if nums[i] + i >= lastIndex {
-                    help(lastIndex: i)
-                    break
-                }
+        var last = nums.count - 1
+        for (i, num) in nums.reversed().enumerated() {
+            if num + (nums.count - 1 - i) >= last {
+                last = nums.count - 1 - i
+            } else {
+                continue
             }
         }
-        help(lastIndex: nums.count - 1)
-        return result
+        return last == 0 ? true : false
     }
+    
+//    func canJump(_ nums: [Int]) -> Bool {
+//        var store = Array(repeating: 0, count: nums.count)
+//        let length = nums.count - 1
+//        for (i, num) in nums.reversed().enumerated() {
+//            if num - i >= 0 {
+//                store[length - i] = 1
+//            } else {
+//                store[length - i] = -1
+//                for j in 0 ... num {
+//                    if store[length - i + j] == 1 {
+//                        store[length - i] = 1
+//                        break
+//                    }
+//                }
+//            }
+//        }
+//        return store[0] == 1 ? true : false
+//    }
     
     func spiralOrder(_ matrix: [[Int]]) -> [Int] {
         var result = [Int]()
@@ -685,7 +695,7 @@ class ViewController: UIViewController {
         func helper(_ x: Double, _ n: Int) -> Double {
             if n == 0 { return 1.0 }
             let half = helper(X, n / 2)
-            if n % 2 == 0 {
+            if n & 1 == 0 {
                 return half * half
             } else {
                 return half * half * X
@@ -714,24 +724,47 @@ class ViewController: UIViewController {
     func rotate(_ matrix: inout [[Int]]) {
         for i in 0 ..< matrix[0].count {
             for j in i ..< matrix[0].count {
-                var tmpA = matrix[i][j], tmpB = matrix[j][i]
-                swap(&tmpA, &tmpB)
-                matrix[i][j] = tmpA
-                matrix[j][i] = tmpB
+                let tmp = matrix[i][j]
+                matrix[i][j] = matrix[j][i]
+                matrix[j][i] = tmp
             }
         }
         for (index, tmp) in matrix.enumerated() {
             matrix[index] = tmp.reversed()
         }
-        print(matrix)
     }
     
     
-    func permute(_ nums: [Int]) -> [[Int]] {
-        if nums.count == 0 || nums.count == 1 { return [nums] }
+    func permuteUnique(_ nums: [Int]) -> [[Int]] {
+        guard nums.count > 1 else {
+            return [nums]
+        }
         var result = [[Int]]()
         func helper(orignNums: [Int], tmp: [Int]) {
-            if orignNums.count == 0 {
+            guard orignNums.count > 0 else {
+                result.append(tmp)
+                return
+            }
+            for i in 0 ..< orignNums.count {
+                if i > 0, orignNums[i] == orignNums[i - 1] {
+                    continue
+                }
+                var a = orignNums
+                a.remove(at: i)
+                helper(orignNums: a, tmp: tmp + [orignNums[i]])
+            }
+        }
+        helper(orignNums: nums.sorted(), tmp: [])
+        return result
+    }
+    
+    func permute(_ nums: [Int]) -> [[Int]] {
+        guard nums.count > 1 else {
+            return [nums]
+        }
+        var result = [[Int]]()
+        func helper(orignNums: [Int], tmp: [Int]) {
+            guard orignNums.count > 0 else {
                 result.append(tmp)
                 return
             }
