@@ -16,7 +16,21 @@ class ViewController: UIViewController {
         
         
         
-        print(canJump([1,2,1,0,2,1,2,1,0]))
+        print(maxProfit([7,1,5,3,6,4]))
+    }
+    
+    //买卖股票的最佳时期  贪心算法
+    func maxProfit(_ prices: [Int]) -> Int {
+        guard prices.count > 1 else {
+            return 0
+        }
+        var result = 0
+        for (i, num) in prices[1 ..< prices.count].enumerated() {
+            if num - prices[i] > 0 {
+                result += num - prices[i]
+            }
+        }
+        return result
     }
     
     //子集 位运算
@@ -250,22 +264,22 @@ class ViewController: UIViewController {
         return res.joined()
     }
     
-    func maxProfit(_ prices: [Int]) -> Int {
-        guard prices.count > 1 else {
-            return 0
-        }
-        var buyIndex = 0, sellIndex = 1, maxRes = 0
-        for _ in 1 ... prices.count - 1 {
-            if prices[sellIndex] - prices[buyIndex] < 0 {
-                buyIndex = sellIndex
-            } else {
-                maxRes = max(maxRes, prices[sellIndex] - prices[buyIndex])
-            }
-            sellIndex += 1
-        }
-        
-        return maxRes
-    }
+//    func maxProfit(_ prices: [Int]) -> Int {
+//        guard prices.count > 1 else {
+//            return 0
+//        }
+//        var buyIndex = 0, sellIndex = 1, maxRes = 0
+//        for _ in 1 ... prices.count - 1 {
+//            if prices[sellIndex] - prices[buyIndex] < 0 {
+//                buyIndex = sellIndex
+//            } else {
+//                maxRes = max(maxRes, prices[sellIndex] - prices[buyIndex])
+//            }
+//            sellIndex += 1
+//        }
+//
+//        return maxRes
+//    }
     
     func merge(_ nums1: inout [Int], _ m: Int, _ nums2: [Int], _ n: Int) {
         var i = 0
