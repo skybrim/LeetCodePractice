@@ -19,6 +19,17 @@ class ViewController: UIViewController {
         print(maxProfit([7,1,5,3,6,4]))
     }
     
+    func containsDuplicate(_ nums: [Int]) -> Bool {
+        var store = [Int: Int]()
+        for num in nums {
+            if let _ = store[num] {
+                return true
+            }
+            store[num] = num
+        }
+        return false
+    }
+    
     func rotate(_ nums: inout [Int], _ k: Int) {
         guard k > 0, nums.count > 0 else {
             return
