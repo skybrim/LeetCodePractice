@@ -19,6 +19,17 @@ class ViewController: UIViewController {
         print(maxProfit([7,1,5,3,6,4]))
     }
     
+    func singleNumber(_ nums: [Int]) -> Int {
+        //按位异或
+        //自身和自身 按位异或，等于 0
+        //0 和 任何数 按位异或，等于 任何数
+        var result = nums[0]
+        for index in 1 ..< nums.count {
+            result = result ^ nums[index]
+        }
+        return result
+    }
+    
     func containsDuplicate(_ nums: [Int]) -> Bool {
         var store = [Int: Int]()
         for num in nums {
