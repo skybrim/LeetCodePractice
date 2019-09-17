@@ -19,6 +19,24 @@ class ViewController: UIViewController {
         print(maxProfit([7,1,5,3,6,4]))
     }
     
+    func rotate(_ nums: inout [Int], _ k: Int) {
+        guard k > 0, nums.count > 0 else {
+            return
+        }
+        let j = k % nums.count
+        func helpReversed(_ startIndex: Int, _ endIndex: Int) {
+            var startIndex = startIndex, endIndex = endIndex
+            while startIndex < endIndex {
+                nums.swapAt(startIndex, endIndex)
+                startIndex += 1
+                endIndex -= 1
+            }
+        }
+        nums = nums.reversed()
+        helpReversed(0, j - 1)
+        helpReversed(j, nums.count - 1)
+    }
+    
     //买卖股票的最佳时期  贪心算法
     func maxProfit(_ prices: [Int]) -> Int {
         guard prices.count > 1 else {
