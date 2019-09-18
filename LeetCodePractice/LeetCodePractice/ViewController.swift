@@ -16,7 +16,19 @@ class ViewController: UIViewController {
         
         
         
-        print(maxProfit([7,1,5,3,6,4]))
+        print(intersect([1, 2, 2, 1], [2]))
+    }
+    
+    func intersect(_ nums1: [Int], _ nums2: [Int]) -> [Int] {
+        var nums1Dic = Dictionary(nums1.map{ ($0, 1) }, uniquingKeysWith: +)
+        var res = [Int]()
+        for num in nums2 {
+            if let count = nums1Dic[num], count > 0 {
+                res.append(num)
+                nums1Dic[num] = count - 1
+            }
+        }
+        return res
     }
     
     func singleNumber(_ nums: [Int]) -> Int {

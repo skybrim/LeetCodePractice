@@ -3,13 +3,12 @@ import UIKit
 var str = "Hello, playground"
 
 //子集 位运算
+// [1, 2, 3] 的子集
+// 用 0 和 1 表示元素该子集是否存在
+// 【000】【001】【010】【100】【011】【101】【110】【111】
+// 转换成十进制
+//   0      1     2     3     4      5     6     7
 func subsets(_ nums: [Int]) -> [[Int]] {
-    
-    // [1, 2, 3] 的子集
-    // 用 0 和 1 表示元素该子集是否存在
-    // 【000】【001】【010】【100】【011】【101】【110】【111】
-    // 转换成十进制
-    //   0      1     2     3     4      5     6     7
     
     var res = [[Int]]()
     
@@ -28,4 +27,16 @@ func subsets(_ nums: [Int]) -> [[Int]] {
         res.append(sub)
     }
     return res
+}
+
+//给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素
+func singleNumber(_ nums: [Int]) -> Int {
+    //按位异或
+    //自身和自身 按位异或，等于 0
+    //0 和 任何数 按位异或，等于 任何数
+    var result = nums[0]
+    for index in 1 ..< nums.count {
+        result = result ^ nums[index]
+    }
+    return result
 }
