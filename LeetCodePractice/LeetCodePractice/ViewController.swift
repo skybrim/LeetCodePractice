@@ -13,10 +13,25 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
-        
-        
-        print(intersect([1, 2, 2, 1], [2]))
+        var nums = [1, 0]
+        moveZeroes(&nums)
+    }
+    
+    func moveZeroes(_ nums: inout [Int]) {
+        guard nums.count > 1 else {
+            return
+        }
+        var zeroIndex = 0
+        for i in 0 ..< nums.count {
+            if nums[i] != 0 {
+                nums[zeroIndex] = nums[i]
+                zeroIndex += 1
+            }
+        }
+        for j in zeroIndex ..< nums.count {
+            nums[j] = 0
+        }
+        print(nums)
     }
     
     func intersect(_ nums1: [Int], _ nums2: [Int]) -> [Int] {
