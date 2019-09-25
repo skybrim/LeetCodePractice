@@ -17,6 +17,16 @@ class ViewController: UIViewController {
         moveZeroes(&nums)
     }
     
+    func reverseString(_ s: inout [Character]) {
+//         s = s.reversed()
+        var left = 0, right = s.count - 1
+        while left < right {
+            s.swapAt(left, right)
+            left += 1
+            right -= 1
+        }
+    }
+    
     func moveZeroes(_ nums: inout [Int]) {
         guard nums.count > 1 else {
             return
