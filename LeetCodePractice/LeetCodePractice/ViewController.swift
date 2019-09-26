@@ -13,8 +13,42 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        var nums = [1, 0]
-        moveZeroes(&nums)
+//        var nums = [1, 0]
+//        moveZeroes(&nums)
+        
+        print("hello".unicodeScalars)
+
+    }
+    
+    func firstUniqChar(_ s: String) -> Int {
+        
+        let store = Dictionary(s.map{ ($0, 1) }, uniquingKeysWith: +)
+        for (i, char) in s.enumerated() {
+            if store[char] == 1 {
+                return i
+            }
+        }
+        return -1
+    }
+    
+    func reverse(_ x: Int) -> Int {
+        var result = 0, tmpX = abs(x)
+        let resultMax = INT32_MAX / 10
+        let xMax = INT32_MAX - INT32_MAX / 10
+        while tmpX > 0 {
+            if result > resultMax {
+                return 0
+            }
+            if result == resultMax, tmpX > xMax {
+                return 0
+            }
+            result = result * 10 + tmpX % 10
+            tmpX = tmpX / 10
+        }
+        if x < 0 {
+            result = -result
+        }
+        return result
     }
     
     func reverseString(_ s: inout [Character]) {
@@ -1315,20 +1349,20 @@ class ViewController: UIViewController {
         return resultString
     }
     
-    func reverse(_ x: Int) -> Int {
-        var result = 0
-        var input = abs(x)
-        while input != 0 {
-            let pop = input % 10
-            input /= 10
-            if (result > INT32_MAX / 10 || (result == INT32_MAX / 10 && pop > 7)) { return 0 }
-            result = result * 10 + pop
-        }
-        if x < 0 {
-            result = -result
-        }
-        return result
-    }
+//    func reverse(_ x: Int) -> Int {
+//        var result = 0
+//        var input = abs(x)
+//        while input != 0 {
+//            let pop = input % 10
+//            input /= 10
+//            if (result > INT32_MAX / 10 || (result == INT32_MAX / 10 && pop > 7)) { return 0 }
+//            result = result * 10 + pop
+//        }
+//        if x < 0 {
+//            result = -result
+//        }
+//        return result
+//    }
     
     
     func myAtoi(_ str: String) -> Int {
@@ -1479,7 +1513,7 @@ class ViewController: UIViewController {
         guard nums.count >= 3 else {
             return []
         }
-        var input = nums.sorted()
+        let input = nums.sorted()
         if input.first! > 0 || input.last! < 0 { return [] }
         var res = Set<[Int]>()
         
