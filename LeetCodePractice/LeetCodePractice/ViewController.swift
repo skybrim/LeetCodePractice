@@ -16,8 +16,50 @@ class ViewController: UIViewController {
 //        var nums = [1, 0]
 //        moveZeroes(&nums)
         
-        print("hello".unicodeScalars)
+        print(isPalindrome("0P"))
 
+    }
+    
+    func isPalindrome(_ s: String) -> Bool {
+        guard s.count > 1 else {
+            return true
+        }
+        var s1 = s
+        s1 = s1.filter({ !$0.isWhitespace })
+        s1 = s1.filter({ $0.isLetter || $0.isNumber })
+        s1 = s1.lowercased()
+        let stringArray = s1.map{ String($0) }
+        var left = 0, right = s1.count - 1
+        while left < right {
+            if stringArray[left] != stringArray[right] {
+                return false
+            }
+            left += 1
+            right -= 1
+        }
+        return true
+    }
+    
+    
+    func isAnagram(_ s: String, _ t: String) -> Bool {
+        guard s.count == t.count else {
+            return false
+        }
+        let sStore = Dictionary(s.map{ ($0, 1) }, uniquingKeysWith: +)
+        let tStore = Dictionary(t.map{ ($0, 1) }, uniquingKeysWith: +)
+        guard sStore.count == tStore.count else {
+            return false
+        }
+        for (key, value) in sStore {
+            if let tValue = tStore[key] {
+                if tValue != value {
+                    return false
+                }
+            } else {
+                return false
+            }
+        }
+        return true
     }
     
     func firstUniqChar(_ s: String) -> Int {
