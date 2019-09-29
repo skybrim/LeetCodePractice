@@ -465,6 +465,13 @@ class ViewController: UIViewController {
         }
     }
     
+    func deleteNode(node: ListNode) {
+        if let tmp = node.next {
+            node.val = tmp.val
+            node.next = tmp.next
+        }
+    }
+    
     func reverseList(_ head: ListNode?) -> ListNode? {
         guard let head = head else {
             return nil
