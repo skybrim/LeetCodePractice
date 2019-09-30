@@ -465,6 +465,19 @@ class ViewController: UIViewController {
         }
     }
     
+    func isPalindrome(_ head: ListNode?) -> Bool {
+        var head = head
+        var result = [String]()
+        while let node = head {
+            result += [String(node.val)]
+            head = node.next
+        }
+        if result == result.reversed() {
+            return true
+        }
+        return false
+    }
+    
     func deleteNode(node: ListNode) {
         if let tmp = node.next {
             node.val = tmp.val
