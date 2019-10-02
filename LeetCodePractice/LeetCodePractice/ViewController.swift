@@ -244,6 +244,22 @@ class ViewController: UIViewController {
         return root
     }
     
+    func maxDepth(_ root: TreeNode?) -> Int {
+        guard let root = root else {
+            return 0
+        }
+        func help(_ tmpRoot: TreeNode?, curDepth: Int) -> Int {
+            var leftDepth = curDepth, rightDepth = 0
+            if let _ = tmpRoot?.left {
+                leftDepth = help(tmpRoot?.left, curDepth: curDepth + 1)
+            }
+            if let _ = tmpRoot?.right {
+                rightDepth = help(tmpRoot?.right, curDepth: curDepth + 1)
+            }
+            return max(leftDepth, rightDepth)
+        }
+        return help(root, curDepth: 1)
+    }
     
     //Definition for a binary tree node.
     public class TreeNode {
@@ -464,7 +480,7 @@ class ViewController: UIViewController {
             self.next = nil
         }
     }
-    
+        
     func isPalindrome(_ head: ListNode?) -> Bool {
         var head = head
         var result = [String]()
