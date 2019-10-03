@@ -261,6 +261,29 @@ class ViewController: UIViewController {
         return help(root, curDepth: 1)
     }
     
+    func isValidBST(_ root: TreeNode?) -> Bool {
+        
+        func help(_ node: TreeNode?, _ lower: Int?, _ upper: Int?) -> Bool {
+            guard let node = node else {
+                return true
+            }
+            if let lower = lower, node.val >= lower {
+                return false
+            }
+            if let upper = upper, node.val <= upper {
+                return false
+            }
+            if help(node.left, node.val, upper) == false {
+                return false
+            }
+            if help(node.right, lower, node.val) == false {
+                return false
+            }
+            return true
+        }
+        return help(root, nil, nil)
+    }
+    
     //Definition for a binary tree node.
     public class TreeNode {
         public var val: Int
