@@ -284,6 +284,38 @@ class ViewController: UIViewController {
         return help(root, nil, nil)
     }
     
+    
+    func isSymmetric(_ root: TreeNode?) -> Bool {
+        func help(_ r1: TreeNode?, _ r2: TreeNode?) -> Bool {
+            if r1 == nil && r2 == nil {
+                return true
+            }
+            guard let r1 = r1, let r2 = r2, r1.val == r2.val else {
+                return false
+            }
+            return help(r1.left, r2.right) && help(r1.right, r2.left)
+        }
+        return help(root, root)
+    }
+    
+    func isSymmetric2(_ root: TreeNode?) -> Bool {
+        var queue = [TreeNode?]()
+        queue.append(root)
+        queue.append(root)
+        while queue.count > 0 {
+            let r1 = queue.removeLast()
+            let r2 = queue.removeLast()
+            if r1 == nil && r2 == nil { continue }
+            if r1 == nil || r2 == nil { return false }
+            if r1?.val != r2?.val { return false }
+            queue.append(r1?.left)
+            queue.append(r2?.right)
+            queue.append(r1?.right)
+            queue.append(r2?.left)
+        }
+        return true
+    }
+    
     //Definition for a binary tree node.
     public class TreeNode {
         public var val: Int
