@@ -248,38 +248,22 @@ class ViewController: UIViewController {
         guard let root = root else {
             return 0
         }
-        func help(_ tmpRoot: TreeNode?, curDepth: Int) -> Int {
-            var leftDepth = curDepth, rightDepth = 0
-            if let _ = tmpRoot?.left {
-                leftDepth = help(tmpRoot?.left, curDepth: curDepth + 1)
-            }
-            if let _ = tmpRoot?.right {
-                rightDepth = help(tmpRoot?.right, curDepth: curDepth + 1)
-            }
-            return max(leftDepth, rightDepth)
-        }
-        return help(root, curDepth: 1)
+        return max(maxDepth(root.right), maxDepth(root.left)) + 1
     }
     
     func isValidBST(_ root: TreeNode?) -> Bool {
         
-        func help(_ node: TreeNode?, _ lower: Int?, _ upper: Int?) -> Bool {
+        func help(_ node: TreeNode?, _ min: Int?, _ max: Int?) -> Bool {
             guard let node = node else {
                 return true
             }
-            if let lower = lower, node.val >= lower {
+            if let min = min, node.val <= min {
                 return false
             }
-            if let upper = upper, node.val <= upper {
+            if let max = max, node.val >= max {
                 return false
             }
-            if help(node.left, node.val, upper) == false {
-                return false
-            }
-            if help(node.right, lower, node.val) == false {
-                return false
-            }
-            return true
+            return help(node.left, min, node.val) && help(node.right, node.val, max)
         }
         return help(root, nil, nil)
     }
@@ -314,6 +298,31 @@ class ViewController: UIViewController {
             queue.append(r2?.left)
         }
         return true
+    }
+    
+    func levelOrder(_ root: TreeNode?) -> [[Int]] {
+        var res = [[Int]]()
+        var queue = [TreeNode]()
+        guard let root = root else {
+            return res
+        }
+        queue.append(root)
+        while queue.count > 0 {
+            var tmp = [Int]()
+            let size = queue.count
+            for _ in 0 ..< size {
+                let node = queue.removeFirst()
+                tmp.append(node.val)
+                if let left = node.left {
+                    queue.append(left)
+                }
+                if let right = node.right {
+                    queue.append(right)
+                }
+            }
+            res.append(tmp)
+        }
+        return res
     }
     
     //Definition for a binary tree node.
