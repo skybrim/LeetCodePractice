@@ -16,7 +16,8 @@ class ViewController: UIViewController {
 //        var nums = [1, 0]
 //        moveZeroes(&nums)
         
-        print(isPalindrome("0P"))
+//        print("abc")
+        sortedArrayToBST([-10,-3,0,5,9])
 
     }
     
@@ -323,6 +324,29 @@ class ViewController: UIViewController {
             res.append(tmp)
         }
         return res
+    }
+    
+    func sortedArrayToBST(_ nums: [Int]) -> TreeNode? {
+        guard nums.count > 0 else {
+            return nil
+        }
+        guard nums.count > 1 else {
+            return TreeNode(nums[0])
+        }
+        let start = 0, end = nums.count - 1
+        var mid = (start + end) / 2
+        if (start + end) ^ 1 == 0 {
+            mid = (start + end + 1) / 2
+        }
+        let root = TreeNode(nums[mid])
+        let leftNums = Array(nums[start ..< mid])
+        var rightNums = [Int]()
+        if mid < end {
+            rightNums = Array(nums[mid + 1 ... end])
+        }
+        root.left = sortedArrayToBST(leftNums)
+        root.right = sortedArrayToBST(rightNums)
+        return root
     }
     
     //Definition for a binary tree node.
