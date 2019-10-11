@@ -17,8 +17,39 @@ class ViewController: UIViewController {
 //        moveZeroes(&nums)
         
 //        print("abc")
-        sortedArrayToBST([-10,-3,0,5,9])
+        print(rob([1,2,3,1]))
 
+    }
+    
+    func rob2(_ nums: [Int]) -> Int {
+        guard nums.count > 1 else {
+            return nums.first ?? 0
+        }
+        
+        var res = 0
+        var last = 0
+        
+        for i in nums {
+            let tmp = res
+            res = max(last + i, res)
+            last = tmp
+        }
+        return res
+    }
+    
+    func rob(_ nums: [Int]) -> Int {
+        guard nums.count > 1 else {
+            return nums.first ?? 0
+        }
+        var memory = Array(repeating: -1, count: nums.count)
+        memory[0] = nums[0]
+        memory[1] = max(nums[0], nums[1])
+        var res = max(memory[0], memory[1])
+        for i in 2 ..< nums.count {
+            memory[i] = max(memory[i - 2] + nums[i], memory[i - 1])
+            res = max(res, memory[i])
+        }
+        return res
     }
     
     func isPalindrome(_ s: String) -> Bool {
