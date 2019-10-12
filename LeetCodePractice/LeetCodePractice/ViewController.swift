@@ -21,6 +21,24 @@ class ViewController: UIViewController {
 
     }
     
+    func fizzBuzz(_ n: Int) -> [String] {
+        var res = [String]()
+        for num in 1 ... n {
+            var str = ""
+            if num % 3 == 0 {
+                str.append("Fizz")
+            }
+            if num % 5 == 0 {
+                str.append("Buzz")
+            }
+            if str.count == 0 {
+                str = String(num)
+            }
+            res.append(str)
+        }
+        return res
+    }
+    
     func rob2(_ nums: [Int]) -> Int {
         guard nums.count > 1 else {
             return nums.first ?? 0
