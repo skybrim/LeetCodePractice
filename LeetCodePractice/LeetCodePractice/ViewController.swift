@@ -21,6 +21,25 @@ class ViewController: UIViewController {
 
     }
     
+    func countPrimes(_ n: Int) -> Int {
+        guard n > 2 else {
+            return 0
+        }
+        var res = 0
+        var store = Array(repeating: 1, count: n)
+        for i in 2 ..< n {
+            if store[i] == 1 {
+                res += 1
+                var j = i + i
+                while j < n {
+                    store[j] = 0
+                    j += i
+                }
+            }
+        }
+        return res
+    }
+    
     func fizzBuzz(_ n: Int) -> [String] {
         var res = [String]()
         for num in 1 ... n {
