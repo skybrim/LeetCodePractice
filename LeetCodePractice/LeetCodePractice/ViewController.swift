@@ -21,6 +21,20 @@ class ViewController: UIViewController {
 
     }
     
+    func isPowerOfThree(_ n: Int) -> Bool {
+        guard n > 0 else {
+            return false
+        }
+        var res = n
+        while res % 3 == 0 {
+            res = res / 3
+        }
+        if res == 1 {
+            return true
+        }
+        return false
+    }
+    
     func countPrimes(_ n: Int) -> Int {
         guard n > 2 else {
             return 0
