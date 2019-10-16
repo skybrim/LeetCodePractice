@@ -17,9 +17,21 @@ class ViewController: UIViewController {
 //        moveZeroes(&nums)
         
 //        print("abc")
-        print(rob([1,2,3,1]))
+        print(hammingWeight(0b00000000000000000000000000001011))
 
     }
+    
+    func hammingWeight(_ num: Int) -> Int {
+        var count = 0
+        var num = num
+        while num > 0 {
+            count += num & 1
+            num = num >> 1
+        }
+        return count
+    }
+    
+    
     
     func isPowerOfThree(_ n: Int) -> Bool {
         guard n > 0 else {
