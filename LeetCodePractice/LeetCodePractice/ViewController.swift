@@ -21,6 +21,16 @@ class ViewController: UIViewController {
 
     }
     
+    func hammingDistance(_ x: Int, _ y: Int) -> Int {
+        var tmp = x ^ y
+        var count = 0
+        while tmp > 0 {
+            count += tmp & 1
+            tmp = tmp >> 1
+        }
+        return count
+    }
+    
     func hammingWeight(_ num: Int) -> Int {
         var count = 0
         var num = num
