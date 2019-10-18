@@ -17,10 +17,49 @@ class ViewController: UIViewController {
 //        moveZeroes(&nums)
         
 //        print("abc")
-        print(hammingWeight(0b00000000000000000000000000001011))
+        print(isValidSudoku([
+          ["5","3",".",".","7",".",".",".","."],
+          ["6",".",".","1","9","5",".",".","."],
+          [".","9","8",".",".",".",".","6","."],
+          ["8",".",".",".","6",".",".",".","3"],
+          ["4",".",".","8",".","3",".",".","1"],
+          ["7",".",".",".","2",".",".",".","6"],
+          [".","6",".",".",".",".","2","8","."],
+          [".",".",".","4","1","9",".",".","5"],
+          [".",".",".",".","8",".",".","7","9"]
+        ]))
 
     }
     
+    func isValidSudoku(_ board: [[Character]]) -> Bool {
+        var rows = Array(repeating: [Character](), count: 9)
+        var columns = Array(repeating: [Character](), count: 9)
+        var boxes = Array(repeating: [Character](), count: 9)
+
+        for (i, row) in board.enumerated() {
+            for (j, num) in row.enumerated() {
+                let boxIndex = (i / 3) * 3 + j / 3
+                if num != Character(".") {
+                    if rows[i].contains(num) {
+                        return false
+                    } else {
+                        rows[i].append(num)
+                    }
+                    if columns[j].contains(num) {
+                        return false
+                    } else {
+                        columns[j].append(num)
+                    }
+                    if boxes[boxIndex].contains(num) {
+                        return false
+                    } else {
+                        boxes[boxIndex].append(num)
+                    }
+                }
+            }
+        }
+        return true
+    }
     
     func missingNumber(_ nums: [Int]) -> Int {
         var res = nums.count * (nums.count + 1) / 2
