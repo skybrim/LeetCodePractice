@@ -21,6 +21,15 @@ class ViewController: UIViewController {
 
     }
     
+    
+    func missingNumber(_ nums: [Int]) -> Int {
+        var res = nums.count * (nums.count + 1) / 2
+        for num in nums {
+            res -= num
+        }
+        return res
+    }
+    
     func hammingDistance(_ x: Int, _ y: Int) -> Int {
         var tmp = x ^ y
         var count = 0
