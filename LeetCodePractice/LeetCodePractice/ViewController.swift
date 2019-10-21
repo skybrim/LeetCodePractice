@@ -33,7 +33,52 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-
+        
+        var nums = [
+          [0,1,2,0],
+          [3,4,5,2],
+          [1,3,1,5]
+        ]
+        setZeroes(&nums)
+        
+    }
+    
+    func setZeroes(_ matrix: inout [[Int]]) {
+        guard matrix.count > 0 else {
+            return
+        }
+        var firstC = false
+        let r = matrix.count
+        let c = matrix.first!.count
+        for i in 0 ..< r {
+            if matrix[i][0] == 0 {
+                firstC = true
+            }
+            for j in 1 ..< c {
+                if matrix[i][j] == 0 {
+                    matrix[0][j] = 0
+                    matrix[i][0] = 0
+                }
+            }
+        }
+        for i in 1 ..< r {
+            for j in 1 ..< c {
+                if matrix[i][0] == 0 || matrix[0][j] == 0 {
+                    matrix[i][j] = 0
+                }
+            }
+        }
+        if matrix[0][0] == 0 {
+            for j in 1 ..< c {
+                matrix[0][j] = 0
+            }
+        }
+        if firstC == true {
+            for i in 0 ..< r {
+                matrix[i][0] = 0
+            }
+        }
+        print(matrix)
     }
     
     func isValidSudoku(_ board: [[Character]]) -> Bool {
