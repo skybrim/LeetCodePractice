@@ -39,8 +39,34 @@ class ViewController: UIViewController {
           [3,4,5,2],
           [1,3,1,5]
         ]
-        setZeroes(&nums)
         
+        increasingTriplet([5,1,5,5,2,5,4])
+        
+    }
+    
+    func increasingTriplet(_ nums: [Int]) -> Bool {
+        guard nums.count > 2 else {
+            return false
+        }
+        var minNum = nums[0]
+        var midNum: Int?
+        for num in nums {
+            if num > minNum, midNum == nil {
+                midNum = num
+            }
+            if num < minNum {
+                minNum = num
+            }
+            if let _ = midNum {
+                if num > midNum! {
+                    return true
+                }
+                if num < midNum!, num > minNum {
+                    midNum = num
+                }
+            }
+        }
+        return false
     }
     
     func setZeroes(_ matrix: inout [[Int]]) {
