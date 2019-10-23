@@ -34,14 +34,18 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        var nums = [
-          [0,1,2,0],
-          [3,4,5,2],
-          [1,3,1,5]
-        ]
+        let node1 = ListNode(1)
+        let node2 = ListNode(2)
+        let node3 = ListNode(3)
+        let node4 = ListNode(4)
+        let node5 = ListNode(5)
         
-        increasingTriplet([5,1,5,5,2,5,4])
+        node1.next = node2
+        node2.next = node3
+        node3.next = node4
+        node4.next = node5
         
+        oddEvenList(node1)
     }
     
     func increasingTriplet(_ nums: [Int]) -> Bool {
@@ -795,6 +799,41 @@ class ViewController: UIViewController {
             self.val = val
             self.next = nil
         }
+    }
+    
+    func oddEvenList(_ head: ListNode?) -> ListNode? {
+        guard let _ = head else {
+            return nil
+        }
+        var index = 0
+        let tmp = ListNode(0)
+        var oddHead: ListNode?
+        var evenHead: ListNode?
+        var curHead = head
+        while let curNode = curHead {
+            index += 1
+            if index & 1 == 0 {
+                //偶数节点
+                if let _ = evenHead {
+                    evenHead?.next = curNode
+                } else {
+                    evenHead = curNode
+                    tmp.next = evenHead
+                }
+                evenHead = curNode
+            } else {
+                //奇数节点
+               if let _ = oddHead {
+                   oddHead?.next = curNode
+                }
+                oddHead = curNode
+            }
+            curHead = curHead?.next
+        }
+        evenHead?.next = nil
+        oddHead?.next = tmp.next
+        
+        return head
     }
         
     func isPalindrome(_ head: ListNode?) -> Bool {
