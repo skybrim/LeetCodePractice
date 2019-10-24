@@ -34,18 +34,14 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        let node1 = ListNode(1)
-        let node2 = ListNode(2)
-        let node3 = ListNode(3)
-        let node4 = ListNode(4)
-        let node5 = ListNode(5)
+        let node1 = TreeNode(1)
+        let node2 = TreeNode(2)
+        let node3 = TreeNode(3)
         
-        node1.next = node2
-        node2.next = node3
-        node3.next = node4
-        node4.next = node5
+        node1.right = node2
+        node2.left = node3
         
-        oddEvenList(node1)
+        inorderTraversal(node1)
     }
     
     func increasingTriplet(_ nums: [Int]) -> Bool {
@@ -465,6 +461,19 @@ class ViewController: UIViewController {
         return res
     }
     
+    func inorderTraversal(_ root: TreeNode?) -> [Int] {
+        func help(_ array: inout [Int], _ node: TreeNode?) {
+            guard let node = node else {
+                return
+            }
+            help(&array, node.left)
+            array.append(node.val)
+            help(&array, node.right)
+        }
+        var res = [Int]()
+        help(&res, root)
+        return res
+    }
     
     @discardableResult
     func invertTree(_ root: TreeNode?) -> TreeNode? {
