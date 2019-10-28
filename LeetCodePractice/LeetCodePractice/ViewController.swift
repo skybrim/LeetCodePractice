@@ -37,11 +37,15 @@ class ViewController: UIViewController {
         let node1 = TreeNode(1)
         let node2 = TreeNode(2)
         let node3 = TreeNode(3)
+        let node4 = TreeNode(4)
+        let node5 = TreeNode(5)
+
+        node1.left = node2
+        node1.right = node3
+        node2.left = node4
+        node3.right = node5
         
-        node1.right = node2
-        node2.left = node3
-        
-        inorderTraversal(node1)
+        zigzagLevelOrder(node1)
     }
     
     func increasingTriplet(_ nums: [Int]) -> Bool {
@@ -458,6 +462,45 @@ class ViewController: UIViewController {
             help(tmpLasts, tmpSubRes)
         }
         help(nums, [])
+        return res
+    }
+    
+    func zigzagLevelOrder(_ root: TreeNode?) -> [[Int]] {
+        guard let root = root else {
+            return []
+        }
+        var res = [[Int]]()
+        var nodeQueue = [TreeNode]()
+        nodeQueue.append(root)
+        var row = 1
+        while nodeQueue.count > 0 {
+            row += 1
+            var tmpVals = [Int]()
+            let n = nodeQueue.count
+            for _ in 0 ..< n {
+                let tmpNode: TreeNode
+                tmpNode = nodeQueue.removeFirst()
+                if row & 1 == 0 {
+                    if let right = tmpNode.right {
+                        nodeQueue.append(right)
+                    }
+                    if let left = tmpNode.left {
+                        nodeQueue.append(left)
+                    }
+                } else {
+                    if let left = tmpNode.left {
+                        nodeQueue.append(left)
+                    }
+                    if let right = tmpNode.right {
+                            nodeQueue.append(right)
+                    }
+                }
+
+                tmpVals.append(tmpNode.val)
+            }
+            nodeQueue.reverse()
+            res.append(tmpVals)
+        }
         return res
     }
     
