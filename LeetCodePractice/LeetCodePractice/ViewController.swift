@@ -45,7 +45,10 @@ class ViewController: UIViewController {
         node2.left = node4
         node3.right = node5
         
-        zigzagLevelOrder(node1)
+//        buildTree([3,9,20,15,7], [9,3,15,20,7])
+        let root = buildTree([1, 2], [2, 1])
+
+        print("abc")
     }
     
     func increasingTriplet(_ nums: [Int]) -> Bool {
@@ -463,6 +466,22 @@ class ViewController: UIViewController {
         }
         help(nums, [])
         return res
+    }
+    
+    func buildTree(_ preorder: [Int], _ inorder: [Int]) -> TreeNode? {
+        func help(_ pStart: Int, _ pEnd: Int, _ iStart: Int, _ iEnd: Int) -> TreeNode? {
+            if pStart == pEnd {
+                return nil
+            }
+            let root = TreeNode(preorder[pStart])
+            if let rootIndex_in = inorder.firstIndex(of: root.val) {
+                let leftNum = rootIndex_in - iStart
+                root.left = help(pStart + 1, pStart + leftNum + 1, iStart, rootIndex_in)
+                root.right = help(pStart + leftNum + 1, pEnd, rootIndex_in + 1, iEnd)
+            }
+            return root
+        }
+        return help(0, preorder.count, 0, inorder.count)
     }
     
     func zigzagLevelOrder(_ root: TreeNode?) -> [[Int]] {
