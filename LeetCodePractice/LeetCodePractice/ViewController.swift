@@ -34,21 +34,18 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        let node1 = TreeNode(1)
-        let node2 = TreeNode(2)
-        let node3 = TreeNode(3)
-        let node4 = TreeNode(4)
-        let node5 = TreeNode(5)
+        let node1 = TreeNode(3)
+        let node2 = TreeNode(1)
+        let node3 = TreeNode(4)
+        let node4 = TreeNode(2)
+//        let node5 = TreeNode(5)
 
         node1.left = node2
         node1.right = node3
         node2.left = node4
-        node3.right = node5
+        node2.right = node2
         
-//        buildTree([3,9,20,15,7], [9,3,15,20,7])
-        let root = buildTree([1, 2], [2, 1])
-
-        print("abc")
+        kthSmallest(node1, 1)
     }
     
     func increasingTriplet(_ nums: [Int]) -> Bool {
@@ -466,6 +463,23 @@ class ViewController: UIViewController {
         }
         help(nums, [])
         return res
+    }
+    
+    func kthSmallest(_ root: TreeNode?, _ k: Int) -> Int {
+        func help(_ array: inout [Int], _ node: TreeNode?) {
+            if array.count == k {
+                return
+            }
+            guard let node = node else {
+                return
+            }
+            help(&array, node.left)
+            array.append(node.val)
+            help(&array, node.right)
+        }
+        var res = [Int]()
+        help(&res, root)
+        return res.last!
     }
     
     func buildTree(_ preorder: [Int], _ inorder: [Int]) -> TreeNode? {
