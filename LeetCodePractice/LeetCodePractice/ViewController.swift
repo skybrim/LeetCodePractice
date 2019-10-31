@@ -45,7 +45,61 @@ class ViewController: UIViewController {
         node2.left = node4
         node2.right = node2
         
-        kthSmallest(node1, 1)
+//        kthSmallest(node1, 1)
+        
+        exist([["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], "ABCB")
+    }
+    
+    func exist(_ board: [[Character]], _ word: String) -> Bool {
+        guard word.count > 0 else {
+            return true
+        }
+        guard board.count > 0 else {
+            return false
+        }
+        let rowCount = board.count
+        let columnCount = board.first!.count
+        
+        var res = ""
+        func help(_ tmpWord: String, _ tmpPoint: [[Int]], _ row: Int, _ column: Int) {
+           if res == word {
+               return
+           }
+           guard row < rowCount, column < columnCount, row >= 0, column >= 0 else {
+               return
+           }
+           if tmpPoint.contains([row, column]) {
+               return
+           }
+           let char = board[row][column]
+            if word.contains(char) == false {
+                return
+            }
+           let curWord = tmpWord + String(char)
+           if curWord == word {
+               res = curWord
+               return
+           }
+           if word.contains(curWord) {
+               help(curWord, tmpPoint + [[row, column]], row, column + 1)
+               help(curWord, tmpPoint + [[row, column]], row + 1, column)
+               help(curWord, tmpPoint + [[row, column]], row - 1, column)
+               help(curWord, tmpPoint + [[row, column]], row, column - 1)
+               return
+           }
+        }
+        
+        for row in 0 ..< rowCount {
+            for column in 0 ..< columnCount {
+                if board[row][column] == word.first! {
+                    help("", [], row, column)
+                    if res == word {
+                        return true
+                    }
+                }
+            }
+        }
+        return false
     }
     
     func increasingTriplet(_ nums: [Int]) -> Bool {
