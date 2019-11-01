@@ -50,6 +50,23 @@ class ViewController: UIViewController {
         exist([["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], "ABCB")
     }
     
+    func sortColors(_ nums: inout [Int]) {
+        var cur = 0, left = 0
+        var right = nums.count - 1
+        while cur <= right {
+            if nums[cur] == 0 {
+                nums.swapAt(cur, left)
+                cur += 1
+                left += 1
+            } else if nums[cur] == 2 {
+                nums.swapAt(cur, right)
+                right -= 1
+            } else {
+                cur += 1
+            }
+        }
+    }
+    
     func exist(_ board: [[Character]], _ word: String) -> Bool {
         guard word.count > 0 else {
             return true
@@ -1741,7 +1758,7 @@ class ViewController: UIViewController {
     func isValid(_ s: String) -> Bool {
         if s.count == 0 { return true }
         if s.count % 2 != 0 { return false }
-        var hash = ["{" : "}", "[" : "]", "(" : ")",]
+        let hash = ["{" : "}", "[" : "]", "(" : ")",]
         var stack = [String]()
         for char in s {
             if hash.keys.contains(String(char)) {
@@ -2172,7 +2189,7 @@ class ViewController: UIViewController {
     
     func fourSum(_ nums: [Int], _ target: Int) -> [[Int]] {
         if nums.count < 4 { return [] }
-        var input = nums.sorted()
+        let input = nums.sorted()
         var tmpSum = 0
         var res = Set<[Int]>()
         var threeSum = 0
