@@ -47,9 +47,28 @@ class ViewController: UIViewController {
         
 //        kthSmallest(node1, 1)
         
-        exist([["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], "ABCB")
-        topKFrequent([1, 1, 1, 2, 2, 3], 2)
+        print(findPeakElement([1,2,3,1]))
     }
+    
+    func findPeakElement(_ nums: [Int]) -> Int {
+        var res = 0
+        var last = -Int.max
+        for (i, num) in nums.enumerated() {
+            let next: Int
+            if i + 1 == nums.count {
+                next = -Int.max
+            } else {
+                next = nums[i + 1]
+            }
+            if num > last, num > next {
+                res = i
+                break
+            }
+            last = num
+        }
+        return res
+    }
+    
     func topKFrequent(_ nums: [Int], _ k: Int) -> [Int] {
         let store = Dictionary(nums.map{ ($0, 1) }, uniquingKeysWith: +)
         let tmp = store.sorted(by: {$0.1 > $1.1})
@@ -957,8 +976,7 @@ class ViewController: UIViewController {
     }
     
     func findKthLargest(_ nums: [Int], _ k: Int) -> Int {
-        let sortedNum = nums.sorted()
-        return sortedNum[nums.count - k]
+        return nums.sorted(by: >)[k - 1]
     }
     
     public class ListNode {
