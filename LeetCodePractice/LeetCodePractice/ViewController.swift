@@ -47,7 +47,26 @@ class ViewController: UIViewController {
         
 //        kthSmallest(node1, 1)
         
-        print(merge([[1,3],[2,6],[8,10],[15,18]]))
+        print(searchMatrix([[]
+        ], 20))
+    }
+    
+    func searchMatrix(_ matrix: [[Int]], _ target: Int) -> Bool {
+        let n = matrix.count
+        guard let m = matrix.first?.count else {
+            return false
+        }
+        var i = n - 1, j = 0
+        while i >= 0, j < m  {
+            if matrix[i][j] == target {
+                return true
+            } else if matrix[i][j] > target {
+                i -= 1
+            } else {
+                j += 1
+            }
+        }
+        return false
     }
     
     func searchRange(_ nums: [Int], _ target: Int) -> [Int] {
