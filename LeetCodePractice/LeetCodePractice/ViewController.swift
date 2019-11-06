@@ -47,7 +47,7 @@ class ViewController: UIViewController {
         
 //        kthSmallest(node1, 1)
         
-        print(findPeakElement([1,2,3,1]))
+        print(merge([[1,3],[2,6],[8,10],[15,18]]))
     }
     
     func searchRange(_ nums: [Int], _ target: Int) -> [Int] {
@@ -1342,25 +1342,21 @@ class ViewController: UIViewController {
     
     func merge(_ intervals: [[Int]]) -> [[Int]] {
         let sortedIntervals = intervals.sorted(by: { (nums1: [Int], nums2: [Int]) -> Bool in
-            return nums1.first! < nums2.first!
+            return nums1[0] < nums2[0]
         })
         var results = [[Int]]()
         for nums in sortedIntervals {
-            if let lastNums = results.last {
-                if lastNums.last! >= nums.first! {
-                    if lastNums.last! <= nums.last! {
-                        var tmpLastNums = results.last!
-                        tmpLastNums[1] = nums.last!
-                        results.removeLast()
-                        results.append(tmpLastNums)
-                    } else {
-                        continue
-                    }
-                } else {
-                    results.append(nums)
-                }
-            } else {
+            let length = results.count
+            if length == 0 {
                 results.append(nums)
+                continue
+            }
+            if results[length - 1][1] < nums[0] {
+                results.append(nums)
+                continue
+            }
+            if results[length - 1][1] < nums[1] {
+                results[length - 1][1] = nums[1]
             }
         }
         return results
