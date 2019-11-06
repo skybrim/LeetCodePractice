@@ -50,6 +50,22 @@ class ViewController: UIViewController {
         print(findPeakElement([1,2,3,1]))
     }
     
+    func searchRange(_ nums: [Int], _ target: Int) -> [Int] {
+        var res = [-1, -1]
+        for (i, num) in nums.enumerated() {
+            if num > target {
+                break
+            }
+            if num == target {
+                if res[0] == -1 {
+                    res[0] = i
+                }
+                res[1] = i
+            }
+        }
+        return res
+    }
+    
     func findPeakElement(_ nums: [Int]) -> Int {
         var res = 0
         var last = -Int.max
@@ -1649,14 +1665,6 @@ class ViewController: UIViewController {
         return leftIndex
     }
     
-    
-    func searchRange(_ nums: [Int], _ target: Int) -> [Int] {
-        if let first = nums.firstIndex(of: target),
-            let last = nums.lastIndex(of: target) {
-            return [first, last]
-        }
-        return [-1, -1]
-    }
     
     func search(_ nums: [Int], _ target: Int) -> Int {
         var leftIndex = 0
