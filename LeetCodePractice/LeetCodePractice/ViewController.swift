@@ -45,11 +45,19 @@ class ViewController: UIViewController {
         node2.left = node4
         node2.right = node2
         
-//        kthSmallest(node1, 1)
         
-        print(searchMatrix([[]
-        ], 20))
     }
+    
+    func trailingZeroes(_ n: Int) -> Int {
+        var top = n
+        var res = 0
+        while top >= 5 {
+            res += top / 5
+            top /= 5
+        }
+        return res
+    }
+    
     
     func searchMatrix(_ matrix: [[Int]], _ target: Int) -> Bool {
         let n = matrix.count
