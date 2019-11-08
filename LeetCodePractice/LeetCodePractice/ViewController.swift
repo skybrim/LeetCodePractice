@@ -45,7 +45,23 @@ class ViewController: UIViewController {
         node2.left = node4
         node2.right = node2
         
-        
+        titleToNumber("ZY")
+    }
+    
+
+    
+    func titleToNumber(_ s: String) -> Int {
+        guard s.count > 0 else {
+            return 0
+        }
+        var res = 0
+        let length = s.count - 1
+        let v = Character("A").asciiValue! - 1
+        for (i, char) in s.enumerated() {
+            let base = Int(pow(Double(26), Double(length - i)))
+            res += Int(char.asciiValue! - v) * base
+        }
+        return res
     }
     
     func trailingZeroes(_ n: Int) -> Int {
