@@ -46,9 +46,20 @@ class ViewController: UIViewController {
         node2.right = node2
         
         titleToNumber("ZY")
+        
+        print(getSum(-1, 2))
     }
     
-
+    func getSum(_ a: Int, _ b: Int) -> Int {
+        var ta = a, tb = b
+        var c: Int
+        while tb != 0 {
+            c = (ta & tb) << 1
+            ta = ta ^ tb
+            tb = c
+        }
+        return ta
+    }
     
     func titleToNumber(_ s: String) -> Int {
         guard s.count > 0 else {
