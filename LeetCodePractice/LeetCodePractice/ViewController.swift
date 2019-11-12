@@ -50,6 +50,19 @@ class ViewController: UIViewController {
         print(getSum(-1, 2))
     }
     
+    func majorityElement(_ nums: [Int]) -> Int {
+        let tmp = Dictionary(nums.map{ ($0, 1) }, uniquingKeysWith: +)
+        var maxValue = 0
+        var res: Int = nums[0]
+        for (key, value) in tmp {
+            if value > maxValue {
+                maxValue = value
+                res = key
+            }
+        }
+        return res
+    }
+    
     func getSum(_ a: Int, _ b: Int) -> Int {
         var ta = a, tb = b
         var c: Int
