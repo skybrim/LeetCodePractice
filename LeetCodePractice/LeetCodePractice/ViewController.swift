@@ -50,6 +50,20 @@ class ViewController: UIViewController {
         print(getSum(-1, 2))
     }
     
+    //最大顺子
+    func maxSort(_ a: Int, _ b: Int) -> [Int]? {
+        guard abs(a - b) > 4 else {
+            return nil
+        }
+        let minInput = min(a, b)
+        var res = [minInput, minInput + 1, minInput + 2, minInput + 3, minInput + 4]
+        while res[4] > 13 {
+            res.removeLast()
+            res.insert(minInput - 1, at: 0)
+        }
+        return res
+    }
+    
     func majorityElement(_ nums: [Int]) -> Int {
         let tmp = Dictionary(nums.map{ ($0, 1) }, uniquingKeysWith: +)
         var maxValue = 0
