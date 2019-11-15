@@ -50,6 +50,26 @@ class ViewController: UIViewController {
         print(getSum(-1, 2))
     }
     
+    //快乐数
+    func isHappy(_ n: Int) -> Bool {
+        func bitSquareSum(_ num: Int) -> Int {
+            var sum = 0, num = num
+            while num > 0 {
+                let tmp = num % 10
+                sum += tmp * tmp
+                num = num / 10
+            }
+            return sum
+        }
+        var slow = n, fast = n
+        repeat {
+            slow = bitSquareSum(slow)
+            fast = bitSquareSum(fast)
+            fast = bitSquareSum(fast)
+        } while slow != fast
+        return slow == 1
+    }
+    
     //最大顺子
     func maxSort(_ a: Int, _ b: Int) -> [Int]? {
         guard abs(a - b) > 4 else {
