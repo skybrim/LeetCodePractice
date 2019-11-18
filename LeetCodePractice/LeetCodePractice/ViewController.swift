@@ -45,9 +45,43 @@ class ViewController: UIViewController {
         node2.left = node4
         node2.right = node2
         
-        titleToNumber("ZY")
         
-        print(getSum(-1, 2))
+        
+        
+        print(superEggDrop(4, 2000))
+    }
+    
+    func superEggDrop(_ K: Int, _ N: Int) -> Int {
+        var store = [[Int]: Int]()
+        func help(tmpK: Int, tmpN: Int) -> Int {
+            //一个鸡蛋
+            if tmpK == 1 { return tmpN }
+            //一层楼 或者 0 层
+            if tmpN == 0 { return 0 }
+            //已经存储过的值
+            if let res = store[[tmpK, tmpN]] {
+                return res
+            }
+            var res = Int.max
+            var left = 1, right = tmpN
+            while left + 1 < right {
+                let x = (left + right) / 2
+                let t1 = help(tmpK: tmpK - 1, tmpN: x - 1)
+                let t2 = help(tmpK: tmpK, tmpN: tmpN - x)
+                if t1 < t2 {
+                    left = x
+                } else if t1 > t2 {
+                    right = x
+                } else {
+                    left = x
+                }
+            }
+            let tmp = max(help(tmpK: tmpK - 1, tmpN: left - 1), help(tmpK: tmpK, tmpN: tmpN - left))
+            res = min(res, 1 + tmp)
+            store[[tmpK, tmpN]] = res
+            return res
+        }
+        return help(tmpK: K, tmpN: N)
     }
     
     //快乐数
