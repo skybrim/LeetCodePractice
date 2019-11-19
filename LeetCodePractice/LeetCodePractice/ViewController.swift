@@ -51,6 +51,40 @@ class ViewController: UIViewController {
         print(superEggDrop(4, 2000))
     }
     
+    func maxProduct(_ nums: [Int]) -> Int {
+        var res = Int.min, tmpMax = 1, tmpMin = 1
+        for num in nums {
+            if num < 0 {
+                swap(&tmpMax, &tmpMin)
+            }
+            tmpMax = max(tmpMax * num, num)
+            tmpMin = min(tmpMin * num, num)
+            res = max(res, tmpMax)
+        }
+        return res
+    }
+    
+    func partition(_ s: String) -> [[String]] {
+        var res = [[String]]()
+        
+        func help(tmpS: String, tmpRes: [String]) {
+            if tmpS.count == 0 {
+                res = res + [tmpRes]
+                return
+            }
+            for i in 1 ... tmpS.count {
+                let index = tmpS.index(tmpS.startIndex, offsetBy: i)
+                let tmp = String(tmpS[...index])
+                if isPalindrome(tmp) {
+                    help(tmpS: tmp, tmpRes: tmpRes + [tmp])
+                }
+            }
+        }
+        
+        help(tmpS: s, tmpRes: [])
+        return res
+    }
+    
     func superEggDrop(_ K: Int, _ N: Int) -> Int {
         var store = [[Int]: Int]()
         func help(tmpK: Int, tmpN: Int) -> Int {
@@ -58,7 +92,7 @@ class ViewController: UIViewController {
             if tmpK == 1 { return tmpN }
             //一层楼 或者 0 层
             if tmpN == 0 { return 0 }
-            //已经存储过的值
+            // 已经存储过的值
             if let res = store[[tmpK, tmpN]] {
                 return res
             }
