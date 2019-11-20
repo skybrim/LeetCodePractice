@@ -45,10 +45,22 @@ class ViewController: UIViewController {
         node2.left = node4
         node2.right = node2
         
-        
-        
-        
-        print(superEggDrop(4, 2000))
+        productExceptSelf([])
+    }
+    
+    func productExceptSelf(_ nums: [Int]) -> [Int] {
+        var res = [Int]()
+        var k = 1
+        for i in 0 ..< nums.count {
+            res.append(k)
+            k = k * nums[i]
+        }
+        k = 1
+        for i in (0 ..< nums.count).reversed() {
+            res[i] = res[i] * k
+            k = k * nums[i]
+        }
+        return res
     }
     
     func maxProduct(_ nums: [Int]) -> Int {
