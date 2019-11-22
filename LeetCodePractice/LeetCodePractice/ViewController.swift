@@ -7,26 +7,7 @@
 //
 
 import UIKit
-
-
-class Solution {
-    
-    var originNums = [Int]()
-    
-    init(_ nums: [Int]) {
-        self.originNums = nums
-    }
-    
-    /** Resets the array to its original configuration and return it. */
-    func reset() -> [Int] {
-        return originNums
-    }
-    
-    /** Returns a random shuffling of the array. */
-    func shuffle() -> [Int] {
-        return originNums.shuffled()
-    }
-}
+import WebKit
 
 class ViewController: UIViewController {
 
@@ -45,7 +26,12 @@ class ViewController: UIViewController {
         node2.left = node4
         node2.right = node2
         
-        productExceptSelf([])
+        
+        
+    }
+    
+    func test() {
+        
     }
     
     func productExceptSelf(_ nums: [Int]) -> [Int] {
